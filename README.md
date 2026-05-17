@@ -64,3 +64,6 @@ npm test
 - `scripts/check-framework.mjs` : controles statiques sans dependance.
 
 Avant publication, supprimer les exports temporaires, les pages vides et les doublons historiques.
+## Noms de fichiers
+
+Les pages publiques utilisent des noms ASCII (icones.html, 	hemes.html) pour eviter les problemes d'encodage dans les outils, les URLs et les systemes de fichiers.

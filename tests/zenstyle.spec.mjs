@@ -1,4 +1,4 @@
-import path from 'node:path';
+﻿import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { expect, test } from '@playwright/test';
 
@@ -13,8 +13,8 @@ const publicPages = [
   'demo.html',
   'documentation.html',
   'contact.html',
-  'icÃ´nes.html',
-  'thÃ¨mes.html',
+  'icones.html',
+  'themes.html',
   'mentions-legales-zenstyle.html'
 ];
 

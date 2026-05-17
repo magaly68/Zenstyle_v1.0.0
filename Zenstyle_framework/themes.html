@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../zenstyle.css">
+</head>
+<body>
+    <header class="container">
+        <nav>                
+            <a href="">Accueil</a>
+            <a href="#">Documentation</a>
+            <a href="#">Téléchargement</a>
+            <a href="#">Composants</a>
+            <a href="#">Thèmes</a>
+            <a href="#">Icônes</a>
+            <a href="#">Contact</a>                
+        </nav>
+    </header>
+    <main class="container">
+        <section id="themes">
+          <h2>Thèmes disponibles</h2>
+      
+          <div class="theme-preview theme-light">
+            <h3>Thème clair</h3>
+            <p>Un thème lumineux pour une lecture confortable de jour.</p>
+            <button class="btn btn-primary">Activer</button>
+          </div>
+      
+          <div class="theme-preview theme-dark">
+            <h3>Thème sombre</h3>
+            <p>Un thème doux pour les environnements sombres.</p>
+            <button class="btn btn-secondary">Activer</button>
+          </div>
+      
+          <div class="theme-preview theme-colorful">
+            <h3>Thème coloré</h3>
+            <p>Un thème dynamique avec une palette vive et originale.</p>
+            <button class="btn btn-accent">Activer</button>
+          </div>
+        </section>
+      
+        <section id="mode-switcher">
+          <h2>Changer de thème (mode live)</h2>
+          <p>Utilisez les boutons ci-dessous pour tester le changement de thème en direct.</p>
+          <button class="btn btn-primary" onclick="setTheme('light')">Clair</button>
+          <button class="btn btn-secondary" onclick="setTheme('dark')">Sombre</button>
+          <button class="btn btn-accent" onclick="setTheme('colorful')">Coloré</button>
+        </section>
+
+        
+      </main>
+      
+      <!-- Script de changement de thème -->
+      <script>
+        function setTheme(theme) {
+          document.body.classList.remove('theme-light', 'theme-dark', 'theme-colorful');
+          document.body.classList.add(`theme-${theme}`);
+        }
+      </script>
+      
+    <footer class="container">
+        <p>Mon framework css est un projet open source et est disponible sous la licence MIT. Vous pouvez l'utiliser gratuitement dans vos projets personnels et commerciaux.</p>
+            <a href="">Mentions légales</a>
+            <a href="">Politique de confidentialité</a>
+            <a href="">Gestion des cookies</a>
+        <p>&copy; 2023 Mon framework css. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>
