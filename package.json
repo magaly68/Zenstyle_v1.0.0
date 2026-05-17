@@ -1,0 +1,29 @@
+{
+  "name": "zenstyle",
+  "version": "0.1.0",
+  "description": "Framework CSS leger et reutilisable pour projets HTML.",
+  "private": true,
+  "type": "module",
+  "main": "zenstyle.css",
+  "files": [
+    "zenstyle.css",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "check": "node scripts/check-framework.mjs",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:install": "playwright install"
+  },
+  "keywords": [
+    "css",
+    "framework",
+    "zenstyle",
+    "html"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0"
+  }
+}

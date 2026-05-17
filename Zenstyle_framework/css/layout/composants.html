@@ -3,42 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="framework.css">
+    <link rel="stylesheet" href="../../../zenstyle.css">
     <title>Composants</title>
     <script>
-  // Accordéons
-  document.querySelectorAll('.accordion-header').forEach(header => {
-    header.addEventListener('click', () => {
-      const content = header.nextElementSibling;
-      const isOpen = header.classList.contains('open');
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.accordion').forEach((button) => {
+      button.addEventListener('click', () => {
+        const panel = button.nextElementSibling;
+        const isOpen = button.classList.contains('open');
 
-      document.querySelectorAll('.accordion-header').forEach(h => {
-        h.classList.remove('open');
-        h.nextElementSibling.style.maxHeight = null;
+        document.querySelectorAll('.accordion').forEach((item) => {
+          item.classList.remove('open');
+          item.nextElementSibling?.classList.remove('is-open');
+        });
+
+        if (!isOpen && panel) {
+          button.classList.add('open');
+          panel.classList.add('is-open');
+        }
       });
-
-      if (!isOpen) {
-        header.classList.add('open');
-        content.style.maxHeight = content.scrollHeight + 'px';
-      }
     });
-  });
 
-  // Onglets
-  document.querySelectorAll('.tab-button').forEach(button => {
-    button.addEventListener('click', () => {
-      const tabGroup = button.closest('.tabs');
-      const target = button.dataset.tab;
+    document.querySelectorAll('.tabs').forEach((tabs) => {
+      tabs.querySelectorAll('.tab-btn').forEach((button) => {
+        button.addEventListener('click', () => {
+          const target = button.dataset.tab;
 
-      tabGroup.querySelectorAll('.tab-button').forEach(btn =>
-        btn.classList.remove('active')
-      );
-      tabGroup.querySelectorAll('.tab-content').forEach(content =>
-        content.classList.remove('active')
-      );
+          tabs.querySelectorAll('.tab-btn').forEach((item) => item.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach((content) => content.classList.remove('active'));
 
-      button.classList.add('active');
-      tabGroup.querySelector(`.tab-content[data-tab="${target}"]`).classList.add('active');
+          button.classList.add('active');
+          document.getElementById(target)?.classList.add('active');
+        });
+      });
     });
   });
 </script>      
@@ -145,4 +142,6 @@
     </footer>  
 </body>
 </html>
+
+
 

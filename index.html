@@ -3,36 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="css/layout/footer.css">
-    <link rel="stylesheet" href="css/layout/header.css">
-    <link rel="stylesheet" href="css/layout/grid.css">
-    <link rel="stylesheet" href="css/layout/nav.css">
-    <link rel="stylesheet" href="css/layout/section.css">
-    <link rel="stylesheet" href="css/component/button.css">
-    <link rel="stylesheet" href="css/base/reset.css">
-    <link rel="stylesheet" href="css/base/typography.css">
-    <link rel="stylesheet" href="mon-framework.css">
-    <title>TC framework html/css</title>
+    <link rel="stylesheet" href="zenstyle.css">
+    <title>Zenstyle</title>
 </head>
 <body>
-    <header class="container">
-        
-        <navbar class="navbar"> 
-            <img src="assets/visuel_3.jpg" alt="Visuel" >              
-            <a href="#">Accueil</a></li>
+    <header class="zs-container">
+        <nav class="zs-navbar"> 
+            <img src="Zenstyle_framework/assets/visuel_3.jpg" alt="Visuel" >              
+            <a href="#">Accueil</a>
             <a href="#">Documentation</a>
             <a href="#">Téléchargement</a>
             <a href="#">Composants</a>
             <a href="#">Thèmes</a>                
             <a href="#">Icônes</a>
             <a href="#">Contact</a>                              
-        </navbar>
+        </nav>
     </header>
-    <section class="container">
+    <section class="zs-container">
         <div>
             <h1>Mon framework css</h1>
-
 
             <p>
                 Bienvenue sur mon framework css qui est conçu pour être léger et facile à utiliser. Il est basé sur les meilleures pratiques de développement web et est compatible avec tous les navigateurs modernes.
@@ -41,44 +30,43 @@
             </p>  
         </div> 
         <div>        
-            <button class="btn" type="button" class="CTA">plus d'infos</button>
+            <button class="zs-btn" type="button">plus d'infos</button>
         </div>
         </section>
 
-        <section class="container">
+        <section class="zs-container">
             <h2>Installation</h2>
             <p>
                 Pour installer le framework, il vous suffir de télécharger le fichier zip suivant et de l'extraire dans votre projet. Ensuite, il vous suffit d'inclure le fichier CSS dans votre projet.
                 <br>Vous pouvez également utiliser le gestionnaire de paquets npm pour l'installer facilement dans votre projet.
                 vous pouveez aussi utiliser le lien cdn pour l'utiliser directement dans votre projet sans l'installer.
-                <br>Voici le lien cdn : <a href="https://cdn.jsdelivr.net/npm/tc-framework@1.0.0/dist/tc-framework.min.css">https://cdn.jsdelivr.net/npm/tc-framework@1.0.0/dist/tc-framework.min.css</a>
+                <br>Pour le moment, utilisez le fichier local <code>zenstyle.css</code>. Un CDN pourra etre ajoute apres publication.
             </p>
-            <button class="btn">Installer</button>
-            <img src="assets/undraw_welcome-aboard_y4e9 (1).png" alt="">
+            <button class="zs-btn">Installer</button>
+            <img src="Zenstyle_framework/assets/undraw_welcome-aboard_y4e9 (1).png" alt="">
         </section>
         <section class="container">
             <h2>Documentation</h2>
             <p>
                 La documentation est disponible en ligne et est mise à jour régulièrement. Vous pouvez consulter la documentation pour en savoir plus sur les différentes classes et composants disponibles dans le framework.
-                <br>Vous pouvez également consulter les exemples de code pour voir comment utiliser le framework dans vos projets.
+                <br/>Vous pouvez également consulter les exemples de code pour voir comment utiliser le framework dans vos projets.
 
             </p>
-            <button class="btn" class="CTA" >plus d'infos</button>
-            <img src="assets/scott-graham-5fNmWej4tAA-unsplash.jpg" alt="documentation">
+            <button class="zs-btn zs-CTA" >plus d'infos</button>
+            <img src="Zenstyle_framework/assets/scott-graham-5fNmWej4tAA-unsplash.jpg" alt="documentation">
         </section>
-        <footer class="container" style="text-align: center; padding: 1rem; font-size: 0.9rem;">
-            <navbar class="navbar">                               
-            <p>Ce framework est un projet open source et est disponible sous la licence MIT. Vous pouvez l'utiliser gratuitement dans vos projets personnels et commerciaux.</p>
-            
-                <p>
-                  &copy; 2025 ZenStyle — 
-                  <a href="mentions-legales-zenstyle.html" style="color: inherit; text-decoration: underline;">Mentions légales</a>
-                </p>
-              </footer>
-              
-                <a href="#">Politique de confidentialité</a>
-                <a href="#">Gestion des cookies</a>
-            <p>&copy; 2025  ZenStyle css. Tous droits réservés.</p>
+
+        <footer class="zs-container" style="text-align: center; padding: 1rem; font-size: 0.9rem;">
+            <nav class="zs-navbar">                               
+                  
+                <div>
+                    <p>
+                        &copy; 2025 ZenStyle — Tous droits réservés
+                    </p> 
+                   
+                </div>
+            </nav>
         </footer>
 </body>
 </html>
+
