@@ -79,16 +79,46 @@ test('core CSS classes expose usable styles', async ({ page }) => {
   await expect(page.locator('.zs-alert')).toBeVisible();
 });
 
+test('home page exposes working primary navigation', async ({ page }) => {
+  await page.goto(fileUrl('index.html'));
+
+  const navigation = page.getByRole('navigation', { name: 'Navigation principale' });
+  await expect(navigation).toBeVisible();
+  await expect(navigation.getByRole('link', { name: 'Accueil', exact: true })).toHaveAttribute('aria-current', 'page');
+
+  const expectedLinks = {
+    Documentation: 'documentation.html',
+    Installation: 'README.md',
+    Composants: 'Zenstyle_framework/css/layout/composants.html',
+    Thèmes: 'themes.html',
+    Icônes: 'icones.html',
+    Contact: 'contact.html'
+  };
+
+  for (const [label, href] of Object.entries(expectedLinks)) {
+    await expect(navigation.getByRole('link', { name: label })).toHaveAttribute('href', href);
+  }
+
+  await page.getByRole('link', { name: 'Voir la démo' }).click();
+  await expect(page).toHaveURL(/demo\.html$/);
+});
+
 test('component examples are interactive', async ({ page }) => {
   await page.goto(fileUrl('Zenstyle_framework/css/layout/composants.html'));
 
+  await expect(page.locator('.accordion').first()).toHaveAttribute('aria-expanded', 'false');
   await page.locator('.accordion').first().click();
   await expect(page.locator('.panel').first()).toBeVisible();
+  await expect(page.locator('.accordion').first()).toHaveAttribute('aria-expanded', 'true');
 
   await page.locator('.tab-btn', { hasText: 'Onglet 2' }).click();
   await expect(page.locator('#tab2')).toBeVisible();
   await expect(page.locator('#tab1')).toBeHidden();
+  await expect(page.locator('.tab-btn', { hasText: 'Onglet 2' })).toHaveAttribute('aria-selected', 'true');
 
   await page.locator('button', { hasText: 'Ouvrir la modale' }).click();
   await expect(page.locator('#modal')).toBeVisible();
+  await expect(page.locator('#modal')).toHaveAttribute('aria-hidden', 'false');
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#modal')).toBeHidden();
 });

@@ -1,72 +1,132 @@
-<!DOCTYPE html>
-<html lang="fr"> 
+<!doctype html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ZenStyle, un framework CSS léger pour créer des interfaces web claires et accessibles.">
     <link rel="stylesheet" href="zenstyle.css">
-    <title>Zenstyle</title>
+    <title>ZenStyle | Framework CSS léger</title>
 </head>
 <body>
-    <header class="zs-container">
-        <nav class="zs-navbar"> 
-            <img src="Zenstyle_framework/assets/visuel_3.jpg" alt="Visuel" >              
-            <a href="#">Accueil</a>
-            <a href="#">Documentation</a>
-            <a href="#">Téléchargement</a>
-            <a href="#">Composants</a>
-            <a href="#">Thèmes</a>                
-            <a href="#">Icônes</a>
-            <a href="#">Contact</a>                              
-        </nav>
-    </header>
-    <section class="zs-container">
-        <div>
-            <h1>Mon framework css</h1>
+    <a class="zs-skip-link" href="#contenu">Aller au contenu</a>
 
-            <p>
-                Bienvenue sur mon framework css qui est conçu pour être léger et facile à utiliser. Il est basé sur les meilleures pratiques de développement web et est compatible avec tous les navigateurs modernes.
-                <br>Il est également responsive et s'adapte à toutes les tailles d'écran. Il est livré avec une documentation complète et des exemples de code pour vous aider à démarrer rapidement.
-                <br>Le framework est conçu pour être utilisé avec des préprocesseurs CSS tels que Sass ou Less, mais il peut également être utilisé avec du CSS pur. Il est également compatible avec les systèmes de gestion de contenu tels que WordPress et Joomla.
-            </p>  
-        </div> 
-        <div>        
-            <button class="zs-btn" type="button">plus d'infos</button>
-        </div>
-        </section>
-
-        <section class="zs-container">
-            <h2>Installation</h2>
-            <p>
-                Pour installer le framework, il vous suffir de télécharger le fichier zip suivant et de l'extraire dans votre projet. Ensuite, il vous suffit d'inclure le fichier CSS dans votre projet.
-                <br>Vous pouvez également utiliser le gestionnaire de paquets npm pour l'installer facilement dans votre projet.
-                vous pouveez aussi utiliser le lien cdn pour l'utiliser directement dans votre projet sans l'installer.
-                <br>Pour le moment, utilisez le fichier local <code>zenstyle.css</code>. Un CDN pourra etre ajoute apres publication.
-            </p>
-            <button class="zs-btn">Installer</button>
-            <img src="Zenstyle_framework/assets/undraw_welcome-aboard_y4e9 (1).png" alt="">
-        </section>
-        <section class="container">
-            <h2>Documentation</h2>
-            <p>
-                La documentation est disponible en ligne et est mise à jour régulièrement. Vous pouvez consulter la documentation pour en savoir plus sur les différentes classes et composants disponibles dans le framework.
-                <br/>Vous pouvez également consulter les exemples de code pour voir comment utiliser le framework dans vos projets.
-
-            </p>
-            <button class="zs-btn zs-CTA" >plus d'infos</button>
-            <img src="Zenstyle_framework/assets/scott-graham-5fNmWej4tAA-unsplash.jpg" alt="documentation">
-        </section>
-
-        <footer class="zs-container" style="text-align: center; padding: 1rem; font-size: 0.9rem;">
-            <nav class="zs-navbar">                               
-                  
-                <div>
-                    <p>
-                        &copy; 2025 ZenStyle — Tous droits réservés
-                    </p> 
-                   
+    <header class="zs-site-header">
+        <div class="zs-container">
+            <nav class="zs-navbar" aria-label="Navigation principale">
+                <a class="zs-navbar-brand" href="index.html" aria-label="ZenStyle, accueil">
+                    <img src="Zenstyle_framework/assets/visuel_3.jpg" alt="" width="48" height="48">
+                    <span>ZenStyle</span>
+                </a>
+                <div class="zs-nav-links">
+                    <a href="index.html" aria-current="page">Accueil</a>
+                    <a href="documentation.html">Documentation</a>
+                    <a href="README.md">Installation</a>
+                    <a href="Zenstyle_framework/css/layout/composants.html">Composants</a>
+                    <a href="themes.html">Thèmes</a>
+                    <a href="icones.html">Icônes</a>
+                    <a href="contact.html">Contact</a>
                 </div>
             </nav>
-        </footer>
+        </div>
+    </header>
+
+    <main id="contenu">
+        <section class="zs-container zs-section zs-hero" aria-labelledby="hero-title">
+            <div class="zs-hero-content">
+                <p class="zs-eyebrow">Framework CSS léger et réutilisable</p>
+                <h1 id="hero-title">Des interfaces simples, solides et accessibles.</h1>
+                <p class="zs-lead">
+                    ZenStyle fournit les bases dont un projet HTML a besoin : une grille responsive,
+                    des composants cohérents et des utilitaires faciles à retenir.
+                </p>
+                <div class="zs-actions">
+                    <a class="zs-btn zs-btn-primary" href="demo.html">Voir la démo</a>
+                    <a class="zs-btn zs-btn-outline" href="documentation.html">Lire la documentation</a>
+                </div>
+            </div>
+
+            <div class="zs-code-window" aria-label="Exemple d'utilisation de ZenStyle">
+                <div class="zs-code-window-bar" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                    <small>index.html</small>
+                </div>
+                <pre><code>&lt;main class="zs-container"&gt;
+  &lt;article class="zs-card"&gt;
+    &lt;h2&gt;Un composant prêt à l'emploi&lt;/h2&gt;
+    &lt;a class="zs-btn" href="demo.html"&gt;
+      Découvrir
+    &lt;/a&gt;
+  &lt;/article&gt;
+&lt;/main&gt;</code></pre>
+            </div>
+        </section>
+
+        <section class="zs-container zs-section" aria-labelledby="installation-title">
+            <div class="zs-section-heading">
+                <p class="zs-eyebrow">Commencer en quelques secondes</p>
+                <h2 id="installation-title">Une base claire pour vos pages HTML</h2>
+                <p>Copiez le fichier public, ajoutez une classe et gardez la liberté de personnaliser votre projet.</p>
+            </div>
+
+            <div class="zs-grid zs-grid-3">
+                <article class="zs-card">
+                    <div class="zs-card-body">
+                        <span class="zs-badge zs-badge-primary">01</span>
+                        <h3>Un seul fichier</h3>
+                        <p>Chargez <code>zenstyle.css</code> sans build obligatoire ni dépendance runtime.</p>
+                    </div>
+                </article>
+                <article class="zs-card">
+                    <div class="zs-card-body">
+                        <span class="zs-badge zs-badge-success">02</span>
+                        <h3>Des classes prévisibles</h3>
+                        <p>Le préfixe <code>zs-</code> réduit les collisions avec les styles de votre application.</p>
+                    </div>
+                </article>
+                <article class="zs-card">
+                    <div class="zs-card-body">
+                        <span class="zs-badge zs-badge-warning">03</span>
+                        <h3>Des composants prêts</h3>
+                        <p>Boutons, cartes, formulaires, alertes, modales, onglets et accordéons sont inclus.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="zs-container zs-section" aria-labelledby="explore-title">
+            <div class="zs-grid zs-grid-2">
+                <article class="zs-card zs-card-feature">
+                    <div class="zs-card-body">
+                        <p class="zs-eyebrow">Pour apprendre</p>
+                        <h2 id="explore-title">Explorez les composants</h2>
+                        <p>Consultez les exemples interactifs pour voir comment les styles et les comportements s'assemblent.</p>
+                        <a class="zs-btn zs-btn-secondary" href="Zenstyle_framework/css/layout/composants.html">Ouvrir les composants</a>
+                    </div>
+                </article>
+                <article class="zs-card zs-card-feature zs-card-feature-muted">
+                    <div class="zs-card-body">
+                        <p class="zs-eyebrow">Pour personnaliser</p>
+                        <h2>Adaptez votre interface</h2>
+                        <p>Les variables CSS regroupent les couleurs, espacements, rayons et ombres pour un thème cohérent.</p>
+                        <a class="zs-btn zs-btn-outline" href="themes.html">Voir les thèmes</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="zs-site-footer">
+        <div class="zs-container zs-footer-content">
+            <div>
+                <strong>ZenStyle</strong>
+                <p>Un framework CSS open source sous licence MIT.</p>
+            </div>
+            <nav class="zs-footer-links" aria-label="Liens secondaires">
+                <a href="mentions-legales-zenstyle.html">Mentions légales</a>
+                <a href="README.md">README</a>
+                <a href="https://github.com/magaly68/Zen" target="_blank" rel="noreferrer">GitHub</a>
+            </nav>
+        </div>
+    </footer>
 </body>
 </html>
-

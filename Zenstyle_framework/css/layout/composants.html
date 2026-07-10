@@ -7,6 +7,22 @@
     <title>Composants</title>
     <script>
   document.addEventListener('DOMContentLoaded', () => {
+    const setModalOpen = (isOpen) => {
+      const modal = document.getElementById('modal');
+      const openButton = document.getElementById('open-modal');
+      const closeButton = document.getElementById('close-modal');
+
+      modal.classList.toggle('is-open', isOpen);
+      modal.setAttribute('aria-hidden', String(!isOpen));
+      openButton.setAttribute('aria-expanded', String(isOpen));
+
+      if (isOpen) {
+        closeButton.focus();
+      } else {
+        openButton.focus();
+      }
+    };
+
     document.querySelectorAll('.accordion').forEach((button) => {
       button.addEventListener('click', () => {
         const panel = button.nextElementSibling;
@@ -15,11 +31,15 @@
         document.querySelectorAll('.accordion').forEach((item) => {
           item.classList.remove('open');
           item.nextElementSibling?.classList.remove('is-open');
+          item.setAttribute('aria-expanded', 'false');
+          item.nextElementSibling?.setAttribute('hidden', '');
         });
 
         if (!isOpen && panel) {
           button.classList.add('open');
           panel.classList.add('is-open');
+          button.setAttribute('aria-expanded', 'true');
+          panel.removeAttribute('hidden');
         }
       });
     });
@@ -29,16 +49,33 @@
         button.addEventListener('click', () => {
           const target = button.dataset.tab;
 
-          tabs.querySelectorAll('.tab-btn').forEach((item) => item.classList.remove('active'));
-          document.querySelectorAll('.tab-content').forEach((content) => content.classList.remove('active'));
+          tabs.querySelectorAll('.tab-btn').forEach((item) => {
+            item.classList.remove('active');
+            item.setAttribute('aria-selected', 'false');
+          });
+          tabs.parentElement.querySelectorAll('.tab-content').forEach((content) => content.classList.remove('active'));
 
           button.classList.add('active');
-          document.getElementById(target)?.classList.add('active');
+          button.setAttribute('aria-selected', 'true');
+          tabs.parentElement.querySelector(`#${target}`)?.classList.add('active');
         });
       });
     });
+
+    document.getElementById('open-modal').addEventListener('click', () => setModalOpen(true));
+    document.getElementById('close-modal').addEventListener('click', () => setModalOpen(false));
+    document.getElementById('modal').addEventListener('click', (event) => {
+      if (event.target.id === 'modal') {
+        setModalOpen(false);
+      }
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && document.getElementById('modal').classList.contains('is-open')) {
+        setModalOpen(false);
+      }
+    });
   });
-</script>      
+</script>
 </head>
 <body>
     <header class="container">
@@ -85,12 +122,12 @@
           <!--Modales-->
           <section id="modals">
             <h2>Modales</h2>
-            <button class="btn btn-primary" onclick="document.getElementById('modal').style.display='block'">Ouvrir la modale</button>
-          
-            <div class="modal" id="modal">
+            <button class="btn btn-primary" id="open-modal" aria-controls="modal" aria-expanded="false">Ouvrir la modale</button>
+
+            <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
               <div class="modal-content">
-                <span class="close" onclick="document.getElementById('modal').style.display='none'">&times;</span>
-                <h3>Modale</h3>
+                <button class="close" id="close-modal" type="button" aria-label="Fermer la modale">&times;</button>
+                <h3 id="modal-title">Modale</h3>
                 <p>Voici une modale fonctionnelle.</p>
               </div>
             </div>
@@ -100,13 +137,13 @@
 
           <section id="accordions">
             <h2>Accordéons</h2>
-            <button class="accordion">Section 1</button>
-            <div class="panel">
+            <button class="accordion" id="accordion-1" aria-controls="panel-1" aria-expanded="false">Section 1</button>
+            <div class="panel" id="panel-1" role="region" aria-labelledby="accordion-1" hidden>
               <p>Contenu de la section 1.</p>
             </div>
-          
-            <button class="accordion">Section 2</button>
-            <div class="panel">
+
+            <button class="accordion" id="accordion-2" aria-controls="panel-2" aria-expanded="false">Section 2</button>
+            <div class="panel" id="panel-2" role="region" aria-labelledby="accordion-2" hidden>
               <p>Contenu de la section 2.</p>
             </div>
           </section>
@@ -115,14 +152,14 @@
 
           <section id="tabs">
             <h2>Onglets</h2>
-            <div class="tabs">
-              <button class="tab-btn active" data-tab="tab1">Onglet 1</button>
-              <button class="tab-btn" data-tab="tab2">Onglet 2</button>
+            <div class="tabs" role="tablist" aria-label="Exemple d'onglets">
+              <button class="tab-btn active" id="tab-button-1" role="tab" aria-selected="true" aria-controls="tab1" data-tab="tab1">Onglet 1</button>
+              <button class="tab-btn" id="tab-button-2" role="tab" aria-selected="false" aria-controls="tab2" data-tab="tab2">Onglet 2</button>
             </div>
-            <div id="tab1" class="tab-content active">
+            <div id="tab1" class="tab-content active" role="tabpanel" aria-labelledby="tab-button-1" tabindex="0">
               <p>Contenu de l’onglet 1.</p>
             </div>
-            <div id="tab2" class="tab-content">
+            <div id="tab2" class="tab-content" role="tabpanel" aria-labelledby="tab-button-2" tabindex="0">
               <p>Contenu de l’onglet 2.</p>
             </div>
           </section>
