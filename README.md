@@ -10,6 +10,16 @@ Copie `zenstyle.css` dans ton projet, puis charge-le dans tes pages HTML :
 <link rel="stylesheet" href="zenstyle.css">
 ```
 
+Les fonctionnalités optionnelles utilisent le fichier `zenstyle.js` :
+
+```html
+<script src="zenstyle.js" defer></script>
+```
+
+Ajoutez `data-zs-theme-toggle` à un bouton pour activer le thème clair/sombre,
+`data-zs-copy="#mon-code"` à un bouton pour copier le contenu d'un bloc de code,
+ou `data-zs-toast="Message"` pour afficher une notification temporaire.
+
 Exemple :
 
 ```html
@@ -23,6 +33,23 @@ Exemple :
 </main>
 ```
 
+Toast avec attributs HTML :
+
+```html
+<button data-zs-toast="Enregistrement réussi" data-zs-toast-type="success">
+  Enregistrer
+</button>
+```
+
+Toast avec l'API JavaScript :
+
+```js
+ZenStyle.toast('Enregistrement réussi', { type: 'success', duration: 4000 });
+```
+
+Types disponibles : `success`, `error`, `warning` et `info`. Une durée de `0`
+conserve la notification jusqu'à sa fermeture manuelle.
+
 ## Convention
 
 Les classes publiques utilisent le prefixe `zs-` pour limiter les collisions avec les styles des projets utilisateurs.
@@ -35,6 +62,9 @@ Classes principales :
 - `zs-card`, `zs-card-header`, `zs-card-body`, `zs-card-footer`
 - `zs-input`, `zs-textarea`, `zs-select`, `zs-form-group`
 - `zs-alert`, `zs-badge`, `zs-modal`, `zs-accordion`, `zs-tabs`
+
+Fonctionnalités JavaScript optionnelles : thème clair/sombre mémorisé, copie de
+code avec solution de repli, playground interactif et respect de la préférence système.
 
 ## Developpement et controles
 
@@ -50,9 +80,14 @@ npx.cmd playwright install chromium
 Controles locaux :
 
 ```powershell
+npm.cmd start
 npm.cmd run check
 npm.cmd test
 ```
+
+`npm.cmd start` lance un serveur local sur
+[`http://127.0.0.1:4173/`](http://127.0.0.1:4173/). Le port peut être changé
+avec `PORT=4174 npm.cmd start`.
 
 `npm.cmd run check` verifie que le framework garde un seul fichier CSS public et que les pages HTML ne pointent pas vers d'anciens chemins CSS.
 

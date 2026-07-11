@@ -7,10 +7,12 @@
   "main": "zenstyle.css",
   "files": [
     "zenstyle.css",
+    "zenstyle.js",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
+    "start": "node scripts/server.mjs",
     "check": "node scripts/check-framework.mjs",
     "test": "playwright test",
     "test:headed": "playwright test --headed",

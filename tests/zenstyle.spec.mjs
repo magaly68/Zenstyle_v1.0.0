@@ -12,6 +12,7 @@ const publicPages = [
   'index.html',
   'demo.html',
   'documentation.html',
+  'installation.html',
   'contact.html',
   'icones.html',
   'themes.html',
@@ -24,6 +25,7 @@ test.describe('ZenStyle public pages', () => {
       await page.goto(fileUrl(pageName));
 
       await expect(page.locator('link[href$="zenstyle.css"]').first()).toHaveCount(1);
+      await expect(page.locator('header nav a[href="#"]')).toHaveCount(0);
 
       const brokenImages = await page.evaluate(() =>
         Array.from(document.images)
@@ -88,7 +90,7 @@ test('home page exposes working primary navigation', async ({ page }) => {
 
   const expectedLinks = {
     Documentation: 'documentation.html',
-    Installation: 'README.md',
+    Installation: 'installation.html',
     Composants: 'Zenstyle_framework/css/layout/composants.html',
     Thèmes: 'themes.html',
     Icônes: 'icones.html',
@@ -99,12 +101,60 @@ test('home page exposes working primary navigation', async ({ page }) => {
     await expect(navigation.getByRole('link', { name: label })).toHaveAttribute('href', href);
   }
 
+  await navigation.getByRole('link', { name: 'Installation' }).click();
+  await expect(page).toHaveURL(/installation\.html$/);
+  await page.goto(fileUrl('index.html'));
+
   await page.getByRole('link', { name: 'Voir la démo' }).click();
   await expect(page).toHaveURL(/demo\.html$/);
 });
 
+test('optional helpers provide theme, copy and download interactions', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText: async () => {} }
+    });
+  });
+  await page.goto(fileUrl('index.html'));
+
+  const themeToggle = page.getByRole('button', { name: 'Thème sombre' });
+  await expect(themeToggle).toHaveAttribute('aria-pressed', 'false');
+
+  await themeToggle.click();
+  await expect(page.locator('html')).toHaveAttribute('data-zs-theme', 'dark');
+  await expect(page.getByRole('button', { name: 'Thème clair' })).toHaveAttribute('aria-pressed', 'true');
+
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-zs-theme', 'dark');
+
+  await page.getByRole('button', { name: 'Copier le code' }).click();
+  await expect(page.locator('[data-zs-copy-status]')).toHaveText('Code copié dans le presse-papiers.');
+  await expect(page.locator('a[download]')).toHaveAttribute('href', 'zenstyle.css');
+});
+
+test('playground updates the live component and generated markup', async ({ page }) => {
+  await page.goto(fileUrl('index.html'));
+
+  await page.getByLabel('Composant à tester').selectOption('alert');
+  await page.getByLabel('Variante').selectOption('warning');
+  await page.getByLabel('Texte du composant').fill('Attention en direct');
+  await page.getByLabel('Rayon des bordures').fill('20');
+
+  await expect(page.locator('[data-zs-playground-stage] .zs-alert-warning')).toBeVisible();
+  await expect(page.locator('[data-zs-playground-stage]')).toContainText('Attention en direct');
+  await expect(page.locator('[data-zs-playground-snippet]')).toContainText('zs-alert zs-alert-warning');
+  await expect(page.locator('[data-zs-playground-radius-output]')).toHaveText('20 px');
+
+  await page.getByRole('button', { name: 'Réinitialiser' }).click();
+  await expect(page.getByLabel('Composant à tester')).toHaveValue('button');
+  await expect(page.locator('[data-zs-playground-stage] .zs-btn-primary')).toBeVisible();
+});
+
 test('component examples are interactive', async ({ page }) => {
   await page.goto(fileUrl('Zenstyle_framework/css/layout/composants.html'));
+  await expect(page.locator('header nav a[href="#"]')).toHaveCount(0);
 
   await expect(page.locator('.accordion').first()).toHaveAttribute('aria-expanded', 'false');
   await page.locator('.accordion').first().click();
@@ -121,4 +171,25 @@ test('component examples are interactive', async ({ page }) => {
   await expect(page.locator('#modal')).toHaveAttribute('aria-hidden', 'false');
   await page.keyboard.press('Escape');
   await expect(page.locator('#modal')).toBeHidden();
+});
+
+test('toast notifications support HTML triggers and the JavaScript API', async ({ page }) => {
+  await page.goto(fileUrl('demo.html'));
+
+  await page.getByRole('button', { name: 'Afficher un succès' }).click();
+  const successToast = page.locator('.zs-toast-success');
+  await expect(successToast).toBeVisible();
+  await expect(successToast).toHaveAttribute('role', 'status');
+  await expect(successToast).toContainText('Votre modification a été enregistrée.');
+
+  await successToast.getByRole('button', { name: 'Fermer la notification' }).click();
+  await expect(successToast).toBeHidden();
+
+  await page.evaluate(() => {
+    window.ZenStyle.toast('Échec du traitement.', { type: 'error', duration: 0 });
+  });
+  const errorToast = page.locator('.zs-toast-error');
+  await expect(errorToast).toBeVisible();
+  await expect(errorToast).toHaveAttribute('role', 'alert');
+  await expect(errorToast).toContainText('Échec du traitement.');
 });

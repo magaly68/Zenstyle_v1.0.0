@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Installer et utiliser ZenStyle dans un projet HTML.">
+    <link rel="stylesheet" href="zenstyle.css">
+    <title>Installation | ZenStyle</title>
+</head>
+<body>
+    <a class="zs-skip-link" href="#contenu">Aller au contenu</a>
+    <header class="zs-site-header">
+        <div class="zs-container">
+            <nav class="zs-navbar" aria-label="Navigation principale">
+                <a class="zs-navbar-brand" href="index.html">ZenStyle</a>
+                <div class="zs-nav-links">
+                    <a href="index.html">Accueil</a>
+                    <a href="documentation.html">Documentation</a>
+                    <a href="installation.html" aria-current="page">Installation</a>
+                    <a href="Zenstyle_framework/css/layout/composants.html">Composants</a>
+                    <a href="themes.html">Thèmes</a>
+                    <a href="icones.html">Icônes</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main id="contenu" class="zs-container zs-section">
+        <div class="zs-section-heading">
+            <p class="zs-eyebrow">Démarrer avec ZenStyle</p>
+            <h1>Installer le framework</h1>
+            <p>ZenStyle fonctionne avec une simple feuille de style. Aucun outil de build n'est obligatoire.</p>
+        </div>
+
+        <div class="zs-grid zs-grid-2">
+            <article class="zs-card">
+                <div class="zs-card-body">
+                    <h2>1. Copier les fichiers</h2>
+                    <p>Téléchargez le CSS public et, si nécessaire, le helper JavaScript optionnel.</p>
+                    <a class="zs-btn zs-btn-primary" href="zenstyle.css" download>Télécharger zenstyle.css</a>
+                </div>
+            </article>
+            <article class="zs-card">
+                <div class="zs-card-body">
+                    <h2>2. Ajouter les liens</h2>
+                    <pre class="zs-install-code"><code>&lt;link rel="stylesheet" href="zenstyle.css"&gt;
+&lt;script src="zenstyle.js" defer&gt;&lt;/script&gt;</code></pre>
+                </div>
+            </article>
+        </div>
+
+        <section class="zs-section" aria-labelledby="first-component-title">
+            <h2 id="first-component-title">3. Utiliser un composant</h2>
+            <pre class="zs-install-code"><code>&lt;button class="zs-btn zs-btn-primary"&gt;
+  Commencer
+&lt;/button&gt;</code></pre>
+            <p><a class="zs-btn zs-btn-outline" href="Zenstyle_framework/css/layout/composants.html">Voir tous les composants</a></p>
+        </section>
+    </main>
+
+    <footer class="zs-site-footer">
+        <div class="zs-container zs-footer-content">
+            <div>
+                <strong>ZenStyle</strong>
+                <p>Un framework CSS open source sous licence MIT.</p>
+            </div>
+            <nav class="zs-footer-links" aria-label="Liens secondaires">
+                <a href="mentions-legales-zenstyle.html">Mentions légales</a>
+                <a href="README.md">README</a>
+                <a href="https://github.com/magaly68/Zen" target="_blank" rel="noreferrer">GitHub</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>

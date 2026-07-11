@@ -9,17 +9,22 @@
 </head>
 <body style="font-family: sans-serif; background-color: #f9f9f9; padding: 2rem;">
 
-  <header class="zs-container">
-    <nav>                
-            <a href="#">Accueil</a>
-            <a href="#">Documentation</a>
-            <a href="#">Téléchargement</a>
-            <a href="#">Composants</a>
-            <a href="#">Thèmes</a>
-            <a href="#">Icônes</a>
-            <a href="#">Contact</a>       
-    </nav>
-</header>
+  <header class="zs-site-header">
+    <div class="zs-container">
+      <nav class="zs-navbar" aria-label="Navigation principale">
+        <a class="zs-navbar-brand" href="index.html">ZenStyle</a>
+        <div class="zs-nav-links">
+          <a href="index.html">Accueil</a>
+          <a href="documentation.html">Documentation</a>
+          <a href="installation.html">Installation</a>
+          <a href="Zenstyle_framework/css/layout/composants.html">Composants</a>
+          <a href="themes.html">Thèmes</a>
+          <a href="icones.html">Icônes</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
 
   <h1 class="zs-text-dark">🎨 Démo de la palette de couleurs</h1>
   <div class="zs-row zs-m-3">
@@ -45,6 +50,17 @@
     </div>
   </section>
 
+  <section class="zs-p-3" aria-labelledby="toast-title">
+    <h2 id="toast-title" class="zs-text-dark">Notifications toast</h2>
+    <p>Déclenchez une notification temporaire sans interrompre votre navigation.</p>
+    <div class="zs-row zs-m-3" style="gap: 1rem; flex-wrap: wrap;">
+      <button class="zs-btn btn-success" data-zs-toast="Votre modification a été enregistrée." data-zs-toast-type="success">Afficher un succès</button>
+      <button class="zs-btn btn-danger" data-zs-toast="Une erreur est survenue." data-zs-toast-type="error">Afficher une erreur</button>
+      <button class="zs-btn btn-secondary" data-zs-toast="Votre session expire bientôt." data-zs-toast-type="warning">Afficher un avertissement</button>
+      <button class="zs-btn btn-primary" data-zs-toast="Une nouvelle version est disponible." data-zs-toast-type="info">Afficher une information</button>
+    </div>
+  </section>
+
   <footer class="zs-container">
     <p>Mon framework css est un projet open source et est disponible sous la licence MIT. Vous pouvez l'utiliser gratuitement dans vos projets personnels et commerciaux.</p>
         <a href="">Mentions légales</a>
@@ -52,6 +68,7 @@
         <a href="">Gestion des cookies</a>
     <p>&copy; 2023 Mon framework css. Tous droits réservés.</p>
 </footer>
+<script src="zenstyle.js" defer></script>
 </body>
 
 </html>

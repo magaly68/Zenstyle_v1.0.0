@@ -1,23 +1,53 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Documentation | ZenStyle</title>
     <link rel="stylesheet" href="zenstyle.css">
 </head>
 <body>
-    <header class="container">
-        <nav>                
-            <a href="">Accueil</a>
-            <a href="#">Documentation</a>
-            <a href="#">Téléchargement</a>
-            <a href="#">Composants</a>
-            <a href="#">Thèmes</a>
-            <a href="#">Icônes</a>
-            <a href="#">Contact</a>                
+    <header class="zs-site-header">
+        <div class="zs-container">
+            <nav class="zs-navbar" aria-label="Navigation principale">
+            <a class="zs-navbar-brand" href="index.html">ZenStyle</a>
+            <div class="zs-nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="documentation.html" aria-current="page">Documentation</a>
+            <a href="installation.html">Installation</a>
+            <a href="Zenstyle_framework/css/layout/composants.html">Composants</a>
+            <a href="themes.html">Thèmes</a>
+            <a href="icones.html">Icônes</a>
+            <a href="contact.html">Contact</a>
+            </div>
         </nav>
+        </div>
     </header>
+
+    <main class="zs-container zs-p-3">
+        <h1>Documentation ZenStyle</h1>
+        <section aria-labelledby="toast-documentation">
+            <h2 id="toast-documentation">Notifications toast</h2>
+            <p>Un toast confirme une action sans bloquer la navigation. Les types disponibles sont <code>success</code>, <code>error</code>, <code>warning</code> et <code>info</code>.</p>
+
+            <h3>Déclenchement HTML</h3>
+            <pre><code>&lt;button class="zs-btn zs-btn-success"
+  data-zs-toast="Enregistrement réussi."
+  data-zs-toast-type="success"
+  data-zs-toast-duration="4000"&gt;
+  Enregistrer
+&lt;/button&gt;</code></pre>
+
+            <h3>API JavaScript</h3>
+            <pre><code>ZenStyle.toast('Enregistrement réussi.', {
+  type: 'success',
+  duration: 4000
+});</code></pre>
+            <p>La durée est exprimée en millisecondes. Utilisez <code>duration: 0</code> pour garder le toast affiché jusqu’à sa fermeture manuelle.</p>
+
+            <button class="zs-btn zs-btn-primary" data-zs-toast="La documentation fonctionne !" data-zs-toast-type="success">Tester le toast</button>
+        </section>
+    </main>
 
     <footer class="container">
         <p>Mon framework css est un projet open source et est disponible sous la licence MIT. Vous pouvez l'utiliser gratuitement dans vos projets personnels et commerciaux.</p>
@@ -26,6 +56,7 @@
             <a href="">Gestion des cookies</a>
         <p>&copy; 2023 Mon framework css. Tous droits réservés.</p>
     </footer>
+    <script src="zenstyle.js" defer></script>
 </body>
 </html>
 

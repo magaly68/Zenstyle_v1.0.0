@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ZenStyle, un framework CSS léger pour créer des interfaces web claires et accessibles.">
     <link rel="stylesheet" href="zenstyle.css">
+    <script src="zenstyle.js" defer></script>
     <title>ZenStyle | Framework CSS léger</title>
 </head>
 <body>
@@ -20,11 +21,12 @@
                 <div class="zs-nav-links">
                     <a href="index.html" aria-current="page">Accueil</a>
                     <a href="documentation.html">Documentation</a>
-                    <a href="README.md">Installation</a>
+                    <a href="installation.html">Installation</a>
                     <a href="Zenstyle_framework/css/layout/composants.html">Composants</a>
                     <a href="themes.html">Thèmes</a>
                     <a href="icones.html">Icônes</a>
                     <a href="contact.html">Contact</a>
+                    <button class="zs-theme-toggle" type="button" data-zs-theme-toggle aria-pressed="false">Thème sombre</button>
                 </div>
             </nav>
         </div>
@@ -42,15 +44,20 @@
                 <div class="zs-actions">
                     <a class="zs-btn zs-btn-primary" href="demo.html">Voir la démo</a>
                     <a class="zs-btn zs-btn-outline" href="documentation.html">Lire la documentation</a>
+                    <a class="zs-btn zs-btn-secondary" href="zenstyle.css" download>Télécharger le CSS</a>
                 </div>
             </div>
 
-            <div class="zs-code-window" aria-label="Exemple d'utilisation de ZenStyle">
-                <div class="zs-code-window-bar" aria-hidden="true">
-                    <span></span><span></span><span></span>
+            <div class="zs-code-window" data-zs-copy-region aria-label="Exemple d'utilisation de ZenStyle">
+                <div class="zs-code-window-bar">
+                    <div class="zs-window-dots" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                    </div>
                     <small>index.html</small>
+                    <span class="zs-copy-status" data-zs-copy-status aria-live="polite"></span>
+                    <button class="zs-code-copy" type="button" data-zs-copy="#hero-code">Copier le code</button>
                 </div>
-                <pre><code>&lt;main class="zs-container"&gt;
+                <pre><code id="hero-code">&lt;main class="zs-container"&gt;
   &lt;article class="zs-card"&gt;
     &lt;h2&gt;Un composant prêt à l'emploi&lt;/h2&gt;
     &lt;a class="zs-btn" href="demo.html"&gt;
@@ -111,6 +118,62 @@
                         <a class="zs-btn zs-btn-outline" href="themes.html">Voir les thèmes</a>
                     </div>
                 </article>
+            </div>
+        </section>
+
+        <section class="zs-container zs-section" aria-labelledby="playground-title">
+            <div class="zs-section-heading">
+                <p class="zs-eyebrow">Tester sans quitter la page</p>
+                <h2 id="playground-title">Playground interactif</h2>
+                <p>Modifiez un composant et observez immédiatement le rendu ainsi que le HTML généré.</p>
+            </div>
+
+            <div class="zs-playground" data-zs-playground>
+                <div class="zs-playground-controls">
+                    <div class="zs-form-group">
+                        <label for="zs-playground-component">Composant à tester</label>
+                        <select id="zs-playground-component" class="zs-select" data-zs-playground-component>
+                            <option value="button">Bouton</option>
+                            <option value="alert">Alerte</option>
+                            <option value="badge">Badge</option>
+                        </select>
+                    </div>
+
+                    <div class="zs-form-group">
+                        <label for="zs-playground-variant">Variante</label>
+                        <select id="zs-playground-variant" class="zs-select" data-zs-playground-variant>
+                            <option value="primary">Primaire</option>
+                            <option value="secondary">Secondaire</option>
+                            <option value="success">Succès</option>
+                            <option value="danger">Danger</option>
+                        </select>
+                    </div>
+
+                    <div class="zs-form-group">
+                        <label for="zs-playground-label">Texte du composant</label>
+                        <input id="zs-playground-label" class="zs-input" data-zs-playground-label value="Découvrir" maxlength="40">
+                    </div>
+
+                    <div class="zs-form-group">
+                        <label for="zs-playground-radius">
+                            Rayon des bordures
+                            <output data-zs-playground-radius-output for="zs-playground-radius">8 px</output>
+                        </label>
+                        <input id="zs-playground-radius" class="zs-range" data-zs-playground-radius type="range" min="0" max="24" step="2" value="8">
+                    </div>
+
+                    <button class="zs-btn zs-btn-outline" type="button" data-zs-playground-reset>Réinitialiser</button>
+                </div>
+
+                <div class="zs-playground-preview">
+                    <div class="zs-playground-preview-meta">
+                        <span class="zs-badge zs-badge-primary" data-zs-playground-status>Aperçu live</span>
+                        <span class="zs-text-muted">Le rendu se met à jour automatiquement.</span>
+                    </div>
+                    <div class="zs-playground-stage" data-zs-playground-stage></div>
+                    <pre class="zs-playground-snippet"><code data-zs-playground-snippet></code></pre>
+                    <p class="zs-playground-announce" data-zs-playground-announce role="status" aria-live="polite"></p>
+                </div>
             </div>
         </section>
     </main>
