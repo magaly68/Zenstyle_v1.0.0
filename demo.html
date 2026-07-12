@@ -82,6 +82,57 @@
     </div>
   </section>
 
+  <section class="zs-p-3" aria-labelledby="data-title">
+    <h2 id="data-title" class="zs-text-dark">Navigation et données</h2>
+
+    <nav aria-label="Fil d’Ariane">
+      <ol class="zs-breadcrumb">
+        <li class="zs-breadcrumb-item"><a href="index.html">Accueil</a></li>
+        <li class="zs-breadcrumb-item"><a href="demo.html">Composants</a></li>
+        <li class="zs-breadcrumb-item"><span aria-current="page">Tableaux</span></li>
+      </ol>
+    </nav>
+
+    <div class="zs-table-responsive" tabindex="0" role="region" aria-label="Liste des projets" aria-describedby="table-scroll-help">
+      <p class="zs-form-help zs-p-2" id="table-scroll-help">Faites défiler horizontalement le tableau sur petit écran.</p>
+      <table class="zs-table zs-table-striped zs-table-hover zs-table-sticky">
+        <caption>Avancement des projets</caption>
+        <thead><tr><th scope="col">Projet</th><th scope="col">Responsable</th><th scope="col">Statut</th><th scope="col">Échéance</th><th scope="col">Budget</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Refonte du site</th><td>Magaly</td><td><span class="zs-badge zs-badge-success">Actif</span></td><td>20 juillet</td><td>4 800 €</td></tr>
+          <tr><th scope="row">Application mobile</th><td>Alex</td><td><span class="zs-badge zs-badge-warning">En attente</span></td><td>5 août</td><td>8 200 €</td></tr>
+          <tr><th scope="row">Documentation</th><td>Samira</td><td><span class="zs-badge zs-badge-primary">Révision</span></td><td>12 août</td><td>2 100 €</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <nav aria-label="Pagination des projets">
+      <ul class="zs-pagination">
+        <li><a class="zs-page-link" href="#page-1" aria-label="Page précédente" aria-disabled="true">‹</a></li>
+        <li><a class="zs-page-link" href="#page-1" aria-current="page" aria-label="Page 1">1</a></li>
+        <li><a class="zs-page-link" href="#page-2" aria-label="Page 2">2</a></li>
+        <li><a class="zs-page-link" href="#page-3" aria-label="Page 3">3</a></li>
+        <li><a class="zs-page-link" href="#page-2" aria-label="Page suivante">›</a></li>
+      </ul>
+    </nav>
+  </section>
+
+  <section class="zs-p-3" aria-labelledby="progress-title">
+    <h2 id="progress-title" class="zs-text-dark">Barres de progression</h2>
+    <div class="zs-mb-3">
+      <div class="zs-progress-label"><span>Téléchargement</span><span>65 %</span></div>
+      <div class="zs-progress zs-progress-success" data-zs-progress="65" aria-label="Téléchargement">
+        <div class="zs-progress-bar"></div>
+      </div>
+    </div>
+    <div>
+      <div class="zs-progress-label"><span>Traitement en cours</span></div>
+      <div class="zs-progress zs-progress-indeterminate" role="progressbar" aria-label="Traitement en cours">
+        <div class="zs-progress-bar"></div>
+      </div>
+    </div>
+  </section>
+
   <footer class="zs-container">
     <p>Mon framework css est un projet open source et est disponible sous la licence MIT. Vous pouvez l'utiliser gratuitement dans vos projets personnels et commerciaux.</p>
         <a href="">Mentions légales</a>

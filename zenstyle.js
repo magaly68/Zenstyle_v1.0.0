@@ -265,6 +265,30 @@
     });
   });
 
+  function setProgress(progress, value) {
+    if (!progress) {
+      return;
+    }
+
+    const numericValue = Math.min(100, Math.max(0, Number(value) || 0));
+    const bar = progress.querySelector('.zs-progress-bar');
+
+    progress.classList.remove('zs-progress-indeterminate');
+    progress.setAttribute('role', 'progressbar');
+    progress.setAttribute('aria-valuemin', '0');
+    progress.setAttribute('aria-valuemax', '100');
+    progress.setAttribute('aria-valuenow', String(numericValue));
+    progress.style.setProperty('--zs-progress', `${numericValue}%`);
+    if (bar) {
+      bar.style.width = `${numericValue}%`;
+    }
+    progress.dispatchEvent(new CustomEvent('zs:progress', { detail: { value: numericValue } }));
+  }
+
+  document.querySelectorAll('[data-zs-progress]').forEach((progress) => {
+    setProgress(progress, progress.dataset.zsProgress);
+  });
+
   function selectText(element) {
     const selection = window.getSelection();
     const range = document.createRange();
@@ -600,6 +624,7 @@
 
   window.ZenStyle = Object.assign(window.ZenStyle || {}, {
     toast: showToast,
-    dismissToast: removeToast
+    dismissToast: removeToast,
+    progress: setProgress
   });
 })();

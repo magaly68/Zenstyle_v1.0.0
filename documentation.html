@@ -93,6 +93,45 @@
             <p>Les événements <code>zs:valid</code> et <code>zs:invalid</code> permettent de connecter la validation à votre propre logique d’envoi.</p>
         </section>
 
+        <section aria-labelledby="table-documentation">
+            <h2 id="table-documentation">Tableaux responsives</h2>
+            <p>Placez <code>zs-table</code> dans <code>zs-table-responsive</code>. Ajoutez <code>zs-table-striped</code>, <code>zs-table-hover</code> ou <code>zs-table-sticky</code> selon le besoin.</p>
+            <pre><code>&lt;div class="zs-table-responsive" tabindex="0" role="region" aria-label="Résultats"&gt;
+  &lt;table class="zs-table zs-table-striped zs-table-hover"&gt;
+    &lt;thead&gt;&lt;tr&gt;&lt;th scope="col"&gt;Nom&lt;/th&gt;&lt;th scope="col"&gt;Statut&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;&lt;tr&gt;&lt;th scope="row"&gt;Projet A&lt;/th&gt;&lt;td&gt;Actif&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section aria-labelledby="pagination-documentation">
+            <h2 id="pagination-documentation">Pagination</h2>
+            <pre><code>&lt;nav aria-label="Pagination"&gt;
+  &lt;ul class="zs-pagination"&gt;
+    &lt;li&gt;&lt;a class="zs-page-link" href="?page=1" aria-current="page"&gt;1&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class="zs-page-link" href="?page=2"&gt;2&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+        </section>
+
+        <section aria-labelledby="breadcrumb-documentation">
+            <h2 id="breadcrumb-documentation">Fil d’Ariane</h2>
+            <pre><code>&lt;nav aria-label="Fil d’Ariane"&gt;
+  &lt;ol class="zs-breadcrumb"&gt;
+    &lt;li class="zs-breadcrumb-item"&gt;&lt;a href="/"&gt;Accueil&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="zs-breadcrumb-item"&gt;&lt;span aria-current="page"&gt;Documentation&lt;/span&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;</code></pre>
+        </section>
+
+        <section aria-labelledby="progress-documentation">
+            <h2 id="progress-documentation">Barre de progression</h2>
+            <pre><code>&lt;div class="zs-progress zs-progress-success" data-zs-progress="65" aria-label="Téléchargement"&gt;
+  &lt;div class="zs-progress-bar"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <p>Mettez-la à jour avec <code>ZenStyle.progress(element, 80)</code>. Pour une durée inconnue, utilisez <code>zs-progress-indeterminate</code> sans <code>data-zs-progress</code>.</p>
+        </section>
+
         <section aria-labelledby="tooltip-documentation">
             <h2 id="tooltip-documentation">Infobulle</h2>
             <pre><code>&lt;button data-zs-tooltip="Une information utile"&gt;Aide&lt;/button&gt;</code></pre>

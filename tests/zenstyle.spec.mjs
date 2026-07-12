@@ -273,3 +273,36 @@ test('form validation reports errors and accepts valid values', async ({ page })
   await expect(page.getByLabel('Adresse e-mail')).toHaveAttribute('aria-invalid', 'false');
   await expect(page.locator('.zs-toast-success')).toContainText('Formulaire valide');
 });
+
+test('responsive table, pagination and breadcrumb expose semantic navigation', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(fileUrl('demo.html'));
+
+  const tableRegion = page.getByRole('region', { name: 'Liste des projets' });
+  await expect(tableRegion).toBeVisible();
+  await expect(tableRegion.getByRole('table', { name: 'Avancement des projets' })).toBeVisible();
+  const overflow = await tableRegion.evaluate((element) => ({
+    scrollWidth: element.scrollWidth,
+    clientWidth: element.clientWidth,
+    overflowX: getComputedStyle(element).overflowX
+  }));
+  expect(overflow.scrollWidth).toBeGreaterThan(overflow.clientWidth);
+  expect(overflow.overflowX).toBe('auto');
+
+  await expect(page.getByRole('navigation', { name: 'Fil d’Ariane' }).locator('[aria-current="page"]')).toHaveText('Tableaux');
+  await expect(page.getByRole('navigation', { name: 'Pagination des projets' }).getByRole('link', { name: 'Page 1' })).toHaveAttribute('aria-current', 'page');
+  await expect(page.getByRole('link', { name: 'Page précédente' })).toHaveAttribute('aria-disabled', 'true');
+});
+
+test('progress bars expose values and support JavaScript updates', async ({ page }) => {
+  await page.goto(fileUrl('demo.html'));
+
+  const progress = page.getByRole('progressbar', { name: 'Téléchargement' });
+  await expect(progress).toHaveAttribute('aria-valuenow', '65');
+  await page.evaluate(() => {
+    window.ZenStyle.progress(document.querySelector('[data-zs-progress]'), 80);
+  });
+  await expect(progress).toHaveAttribute('aria-valuenow', '80');
+  await expect(progress.locator('.zs-progress-bar')).toHaveCSS('width', /.+/);
+  await expect(page.getByRole('progressbar', { name: 'Traitement en cours' })).not.toHaveAttribute('aria-valuenow');
+});
