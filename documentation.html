@@ -74,6 +74,25 @@
             <p>Le composant gère automatiquement le clic extérieur, la touche Échap, le retour du focus et la fermeture après sélection d’un lien.</p>
         </section>
 
+        <section aria-labelledby="form-validation-documentation">
+            <h2 id="form-validation-documentation">Validation de formulaire</h2>
+            <p>Ajoutez <code>data-zs-validate</code> au formulaire. ZenStyle utilise les règles HTML natives comme <code>required</code>, <code>type="email"</code>, <code>minlength</code>, <code>maxlength</code> et <code>pattern</code>.</p>
+            <pre><code>&lt;form data-zs-validate&gt;
+  &lt;div class="zs-form-summary" data-zs-error-summary
+    role="alert" tabindex="-1" hidden&gt;&lt;/div&gt;
+
+  &lt;div class="zs-form-group"&gt;
+    &lt;label for="email"&gt;Adresse e-mail&lt;/label&gt;
+    &lt;input class="zs-input" id="email" type="email" required&gt;
+    &lt;span class="zs-form-help"&gt;Nous ne partagerons pas votre adresse.&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;button class="zs-btn zs-btn-primary" type="submit"&gt;Envoyer&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+            <p>Personnalisez un message avec <code>data-zs-error-required</code>, <code>data-zs-error-type</code>, <code>data-zs-error-minlength</code>, <code>data-zs-error-maxlength</code> ou <code>data-zs-error-pattern</code>.</p>
+            <p>Les événements <code>zs:valid</code> et <code>zs:invalid</code> permettent de connecter la validation à votre propre logique d’envoi.</p>
+        </section>
+
         <section aria-labelledby="tooltip-documentation">
             <h2 id="tooltip-documentation">Infobulle</h2>
             <pre><code>&lt;button data-zs-tooltip="Une information utile"&gt;Aide&lt;/button&gt;</code></pre>

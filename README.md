@@ -53,6 +53,7 @@ conserve la notification jusqu'à sa fermeture manuelle.
 Autres composants interactifs :
 
 - navigation mobile automatique pour `.zs-navbar` et `.zs-nav-links` ;
+- validation accessible des formulaires avec `data-zs-validate` ;
 - menu déroulant avec `data-zs-dropdown`, `data-zs-dropdown-toggle` et `data-zs-dropdown-menu` ;
 - infobulle avec `data-zs-tooltip="Information"` ;
 - indicateur de chargement avec `zs-spinner`, `zs-spinner-sm` ou `zs-spinner-lg`.

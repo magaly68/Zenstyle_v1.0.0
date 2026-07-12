@@ -252,3 +252,24 @@ test('dropdown, tooltip and spinner components are usable', async ({ page }) => 
   await expect(page.locator('.zs-spinner')).toBeVisible();
   await expect(page.getByRole('status', { name: 'Chargement en cours' })).toBeVisible();
 });
+
+test('form validation reports errors and accepts valid values', async ({ page }) => {
+  await page.goto(fileUrl('contact.html'));
+
+  await page.getByRole('button', { name: 'Valider le formulaire' }).click();
+  const summary = page.locator('[data-zs-error-summary]');
+  await expect(summary).toBeVisible();
+  await expect(summary).toContainText('erreurs');
+  await expect(page.getByLabel('Nom')).toHaveAttribute('aria-invalid', 'true');
+  await expect(page.getByLabel('Adresse e-mail')).toHaveAttribute('aria-invalid', 'true');
+
+  await page.getByLabel('Nom').fill('Magaly');
+  await page.getByLabel('Adresse e-mail').fill('magaly@example.com');
+  await page.getByLabel('Message').fill('Bonjour, ceci est un message de test.');
+  await page.getByLabel('J’accepte que mes informations soient utilisées pour répondre à ma demande.').check();
+  await page.getByRole('button', { name: 'Valider le formulaire' }).click();
+
+  await expect(summary).toBeHidden();
+  await expect(page.getByLabel('Adresse e-mail')).toHaveAttribute('aria-invalid', 'false');
+  await expect(page.locator('.zs-toast-success')).toContainText('Formulaire valide');
+});

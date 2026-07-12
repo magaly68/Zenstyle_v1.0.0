@@ -153,6 +153,118 @@
     }
   });
 
+  const validatedForms = document.querySelectorAll('[data-zs-validate]');
+
+  function getValidationMessage(field) {
+    if (field.validity.valueMissing) {
+      return field.dataset.zsErrorRequired || 'Ce champ est obligatoire.';
+    }
+
+    if (field.validity.typeMismatch) {
+      return field.dataset.zsErrorType || 'Saisissez une valeur au format attendu.';
+    }
+
+    if (field.validity.tooShort) {
+      return field.dataset.zsErrorMinlength || `Saisissez au moins ${field.minLength} caractères.`;
+    }
+
+    if (field.validity.tooLong) {
+      return field.dataset.zsErrorMaxlength || `Saisissez au maximum ${field.maxLength} caractères.`;
+    }
+
+    if (field.validity.patternMismatch) {
+      return field.dataset.zsErrorPattern || 'Le format de cette valeur est incorrect.';
+    }
+
+    return field.validationMessage || 'Vérifiez la valeur saisie.';
+  }
+
+  function getFieldError(field) {
+    const group = field.closest('.zs-form-group, .form-group, .zs-check-group');
+    let error = group?.querySelector('.zs-form-error, .form-error');
+
+    if (!error && group) {
+      error = document.createElement('span');
+      error.className = 'zs-form-error';
+      error.id = `${field.id || field.name || 'field'}-error`;
+      error.setAttribute('aria-live', 'polite');
+      group.appendChild(error);
+    }
+
+    return { group, error };
+  }
+
+  function validateField(field) {
+    const { group, error } = getFieldError(field);
+    const isValid = field.checkValidity();
+
+    field.classList.toggle('is-invalid', !isValid);
+    field.classList.toggle('is-valid', isValid && field.value !== '');
+    field.setAttribute('aria-invalid', String(!isValid));
+    group?.classList.toggle('has-error', !isValid);
+    group?.classList.toggle('has-success', isValid && field.value !== '');
+
+    if (error) {
+      error.textContent = isValid ? '' : getValidationMessage(field);
+      if (!isValid) {
+        const describedBy = new Set((field.getAttribute('aria-describedby') || '').split(' ').filter(Boolean));
+        describedBy.add(error.id);
+        field.setAttribute('aria-describedby', [...describedBy].join(' '));
+      }
+    }
+
+    return isValid;
+  }
+
+  validatedForms.forEach((form) => {
+    const fields = [...form.querySelectorAll('input, textarea, select')]
+      .filter((field) => !field.disabled && !['hidden', 'submit', 'button'].includes(field.type));
+    const summary = form.querySelector('[data-zs-error-summary]');
+
+    form.noValidate = true;
+
+    fields.forEach((field) => {
+      field.addEventListener('blur', () => validateField(field));
+      field.addEventListener('input', () => {
+        if (field.classList.contains('is-invalid') || field.classList.contains('is-valid')) {
+          validateField(field);
+        }
+      });
+      field.addEventListener('change', () => validateField(field));
+    });
+
+    form.addEventListener('submit', (event) => {
+      const invalidFields = fields.filter((field) => !validateField(field));
+
+      if (invalidFields.length > 0) {
+        event.preventDefault();
+        if (summary) {
+          summary.hidden = false;
+          summary.textContent = invalidFields.length === 1
+            ? 'Le formulaire contient une erreur. Corrigez-la avant de continuer.'
+            : `Le formulaire contient ${invalidFields.length} erreurs. Corrigez-les avant de continuer.`;
+          summary.focus();
+        } else {
+          invalidFields[0].focus();
+        }
+        form.dispatchEvent(new CustomEvent('zs:invalid', { detail: { invalidFields } }));
+        return;
+      }
+
+      if (summary) {
+        summary.hidden = true;
+        summary.textContent = '';
+      }
+
+      if (form.hasAttribute('data-zs-demo')) {
+        event.preventDefault();
+        showToast('Formulaire valide : prêt à être envoyé.', { type: 'success' });
+      }
+
+      form.dispatchEvent(new CustomEvent('zs:valid'));
+    });
+  });
+
   function selectText(element) {
     const selection = window.getSelection();
     const range = document.createRange();
