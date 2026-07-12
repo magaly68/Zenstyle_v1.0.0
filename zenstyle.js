@@ -289,6 +289,74 @@
     setProgress(progress, progress.dataset.zsProgress);
   });
 
+  const themeBuilder = document.querySelector('[data-zs-theme-builder]');
+
+  if (themeBuilder) {
+    const controls = [...themeBuilder.querySelectorAll('[data-zs-theme-variable]')];
+    const output = themeBuilder.querySelector('[data-zs-theme-output]');
+    const announce = themeBuilder.querySelector('[data-zs-theme-announce]');
+    const defaults = Object.fromEntries(controls.map((control) => [control.dataset.zsThemeVariable, control.value]));
+    const presets = {
+      soft: { '--zs-color-primary': '#8b5cf6', '--zs-color-secondary': '#64748b', '--zs-bg': '#fffdf8', '--zs-surface': '#faf5ff', '--zs-border': '#e9d5ff', '--zs-radius': '12px' },
+      professional: { '--zs-color-primary': '#0f4c5c', '--zs-color-secondary': '#334155', '--zs-bg': '#ffffff', '--zs-surface': '#f1f5f9', '--zs-border': '#cbd5e1', '--zs-radius': '6px' },
+      contrast: { '--zs-color-primary': '#0047ff', '--zs-color-secondary': '#111111', '--zs-bg': '#ffffff', '--zs-surface': '#ffffff', '--zs-border': '#000000', '--zs-radius': '4px' }
+    };
+
+    function renderTheme() {
+      const variables = Object.fromEntries(controls.map((control) => [control.dataset.zsThemeVariable, control.value]));
+      Object.entries(variables).forEach(([name, value]) => root.style.setProperty(name, value));
+      output.textContent = `:root {\n${Object.entries(variables).map(([name, value]) => `  ${name}: ${value};`).join('\n')}\n}`;
+      announce.textContent = 'Aperçu du thème mis à jour.';
+      return variables;
+    }
+
+    controls.forEach((control) => control.addEventListener('input', renderTheme));
+    themeBuilder.querySelectorAll('[data-zs-theme-preset]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const values = presets[button.dataset.zsThemePreset];
+        controls.forEach((control) => {
+          if (values?.[control.dataset.zsThemeVariable]) control.value = values[control.dataset.zsThemeVariable];
+        });
+        renderTheme();
+      });
+    });
+    themeBuilder.querySelector('[data-zs-theme-reset]')?.addEventListener('click', () => {
+      controls.forEach((control) => { control.value = defaults[control.dataset.zsThemeVariable]; });
+      renderTheme();
+    });
+    themeBuilder.querySelector('[data-zs-theme-copy]')?.addEventListener('click', async () => {
+      const copied = await copyText(output.textContent, output);
+      announce.textContent = copied ? 'Variables CSS copiées.' : 'Variables sélectionnées. Utilisez Ctrl+C.';
+    });
+    themeBuilder.querySelector('[data-zs-theme-download]')?.addEventListener('click', () => {
+      const url = URL.createObjectURL(new Blob([output.textContent], { type: 'text/css' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'zenstyle-theme.css';
+      link.click();
+      URL.revokeObjectURL(url);
+      announce.textContent = 'Fichier de thème généré.';
+    });
+    renderTheme();
+  }
+
+  const documentationSearch = document.querySelector('[data-zs-doc-search]');
+  if (documentationSearch) {
+    const sections = [...document.querySelectorAll('[data-zs-doc-section]')];
+    const status = document.querySelector('[data-zs-doc-search-status]');
+    documentationSearch.addEventListener('input', () => {
+      const query = documentationSearch.value.trim().toLocaleLowerCase('fr');
+      let visible = 0;
+      sections.forEach((section) => {
+        const matches = !query || section.textContent.toLocaleLowerCase('fr').includes(query);
+        section.classList.toggle('zs-doc-section-hidden', !matches);
+        if (matches) visible += 1;
+      });
+      status.textContent = query ? `${visible} section${visible > 1 ? 's' : ''} trouvée${visible > 1 ? 's' : ''}.` : `${sections.length} sections disponibles.`;
+    });
+    documentationSearch.dispatchEvent(new Event('input'));
+  }
+
   function selectText(element) {
     const selection = window.getSelection();
     const range = document.createRange();

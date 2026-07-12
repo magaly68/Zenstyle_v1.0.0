@@ -1,77 +1,79 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thèmes | ZenStyle</title>
-    <link rel="stylesheet" href="zenstyle.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Créer et exporter un thème personnalisé pour ZenStyle.">
+  <title>Personnaliser un thème | ZenStyle</title>
+  <link rel="stylesheet" href="zenstyle.css">
+  <script src="zenstyle.js" defer></script>
 </head>
 <body>
-    <header class="zs-site-header">
-        <div class="zs-container">
-            <nav class="zs-navbar" aria-label="Navigation principale">
-                <a class="zs-navbar-brand" href="index.html">ZenStyle</a>
-                <div class="zs-nav-links">
-                    <a href="index.html">Accueil</a>
-                    <a href="documentation.html">Documentation</a>
-                    <a href="installation.html">Installation</a>
-                    <a href="Zenstyle_framework/css/layout/composants.html">Composants</a>
-                    <a href="themes.html" aria-current="page">Thèmes</a>
-                    <a href="icones.html">Icônes</a>
-                    <a href="contact.html">Contact</a>
-                </div>
-            </nav>
+  <a class="zs-skip-link" href="#contenu">Aller au contenu</a>
+  <header class="zs-site-header">
+    <div class="zs-container">
+      <nav class="zs-navbar" aria-label="Navigation principale">
+        <a class="zs-navbar-brand" href="index.html">ZenStyle</a>
+        <div class="zs-nav-links">
+          <a href="index.html">Accueil</a><a href="documentation.html">Documentation</a><a href="installation.html">Installation</a>
+          <a href="Zenstyle_framework/css/layout/composants.html">Composants</a><a href="themes.html" aria-current="page">Thèmes</a>
+          <a href="icones.html">Icônes</a><a href="contact.html">Contact</a>
         </div>
-    </header>
-    <main class="zs-container">
-        <section id="zs-themes">
-          <h2>Thèmes disponibles</h2>
-      
-          <div class="zs-theme-preview theme-light">
-            <h3>Thème clair</h3>
-            <p>Un thème lumineux pour une lecture confortable de jour.</p>
-            <button class="zs-btn zs-btn-primary">Activer</button>
-          </div>
-      
-          <div class="theme-preview theme-dark">
-            <h3>Thème sombre</h3>
-            <p>Un thème doux pour les environnements sombres.</p>
-            <button class="zs-btn zs-btn-secondary">Activer</button>
-          </div>
-      
-          <div class="zs-theme-preview theme-colorful">
-            <h3>Thème coloré</h3>
-            <p>Un thème dynamique avec une palette vive et originale.</p>
-            <button class="zs-btn zs-btn-accent">Activer</button>
-          </div>
-        </section>
-      
-        <section id="mode-switcher">
-          <h2>Changer de thème (mode live)</h2>
-          <p>Utilisez les boutons ci-dessous pour tester le changement de thème en direct.</p>
-          <button class="btn btn-primary" onclick="setTheme('light')">Clair</button>
-          <button class="btn btn-secondary" onclick="setTheme('dark')">Sombre</button>
-          <button class="btn btn-accent" onclick="setTheme('colorful')">Coloré</button>
-        </section>
+      </nav>
+    </div>
+  </header>
 
-        
-      </main>
-      
-      <!-- Script de changement de thème -->
-      <script>
-        function setTheme(theme) {
-          document.body.classList.remove('theme-light', 'theme-dark', 'theme-colorful');
-          document.body.classList.add(`theme-${theme}`);
-        }
-      </script>
-      
-    <footer class="zs-container">
-        <p>Mon framework css est un projet open source et est disponible sous la licence MIT. Vous pouvez l'utiliser gratuitement dans vos projets personnels et commerciaux.</p>
-            <a href="">Mentions légales</a>
-            <a href="">Politique de confidentialité</a>
-            <a href="">Gestion des cookies</a>
-        <p>&copy; 2023 Mon framework css. Tous droits réservés.</p>
-    </footer>
-    <script src="zenstyle.js" defer></script>
+  <main id="contenu" class="zs-container zs-section">
+    <div class="zs-section-heading">
+      <p class="zs-eyebrow">Personnalisation</p>
+      <h1>Créez votre thème ZenStyle</h1>
+      <p>Modifiez les couleurs et les arrondis, observez le résultat puis exportez les variables CSS.</p>
+    </div>
+
+    <section class="zs-theme-builder" data-zs-theme-builder aria-labelledby="builder-title">
+      <div class="zs-theme-controls">
+        <h2 id="builder-title">Réglages</h2>
+        <div class="zs-theme-presets" aria-label="Thèmes prédéfinis">
+          <button class="zs-btn zs-btn-sm zs-btn-outline" type="button" data-zs-theme-preset="soft">Doux</button>
+          <button class="zs-btn zs-btn-sm zs-btn-outline" type="button" data-zs-theme-preset="professional">Professionnel</button>
+          <button class="zs-btn zs-btn-sm zs-btn-outline" type="button" data-zs-theme-preset="contrast">Contraste élevé</button>
+        </div>
+        <label class="zs-color-control">Couleur principale <input type="color" value="#2563eb" data-zs-theme-variable="--zs-color-primary"></label>
+        <label class="zs-color-control">Couleur secondaire <input type="color" value="#475569" data-zs-theme-variable="--zs-color-secondary"></label>
+        <label class="zs-color-control">Arrière-plan <input type="color" value="#ffffff" data-zs-theme-variable="--zs-bg"></label>
+        <label class="zs-color-control">Surface <input type="color" value="#f8fafc" data-zs-theme-variable="--zs-surface"></label>
+        <label class="zs-color-control">Bordures <input type="color" value="#dbe3ef" data-zs-theme-variable="--zs-border"></label>
+        <div class="zs-form-group">
+          <label for="theme-radius">Arrondi des composants</label>
+          <select id="theme-radius" class="zs-select" data-zs-theme-variable="--zs-radius">
+            <option value="0px">0 px</option><option value="4px">4 px</option><option value="8px" selected>8 px</option><option value="12px">12 px</option><option value="16px">16 px</option>
+          </select>
+        </div>
+        <div class="zs-flex zs-flex-wrap zs-gap-2">
+          <button class="zs-btn zs-btn-secondary" type="button" data-zs-theme-reset>Réinitialiser</button>
+          <button class="zs-btn zs-btn-primary" type="button" data-zs-theme-copy>Copier le CSS</button>
+          <button class="zs-btn zs-btn-outline" type="button" data-zs-theme-download>Exporter</button>
+        </div>
+        <p class="zs-form-help" data-zs-theme-announce role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="zs-theme-preview-panel">
+        <h2>Aperçu</h2>
+        <article class="zs-card zs-mb-3"><div class="zs-card-body"><span class="zs-badge zs-badge-primary">Nouveau</span><h3>Une carte personnalisée</h3><p>Les variables s’appliquent immédiatement à toute la page.</p><button class="zs-btn zs-btn-primary">Action principale</button></div></article>
+        <div class="zs-alert zs-alert-success">Votre thème est prêt à être exporté.</div>
+        <pre class="zs-theme-code"><code data-zs-theme-output></code></pre>
+      </div>
+    </section>
+
+    <section class="zs-section" aria-labelledby="sizes-title">
+      <h2 id="sizes-title">Tailles de composants</h2>
+      <div class="zs-flex zs-flex-wrap zs-items-center zs-gap-3">
+        <button class="zs-btn zs-btn-primary zs-btn-sm">Petit</button><button class="zs-btn zs-btn-primary">Normal</button><button class="zs-btn zs-btn-primary zs-btn-lg">Grand</button>
+        <span class="zs-badge zs-badge-success zs-badge-sm">Petit</span><span class="zs-badge zs-badge-success">Normal</span><span class="zs-badge zs-badge-success zs-badge-lg">Grand</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="zs-site-footer"><div class="zs-container zs-footer-content"><div><strong>ZenStyle 1.0</strong><p>Framework CSS open source sous licence MIT.</p></div><nav class="zs-footer-links" aria-label="Liens secondaires"><a href="mentions-legales-zenstyle.html">Mentions légales</a><a href="README.md">README</a></nav></div></footer>
 </body>
 </html>
