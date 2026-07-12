@@ -141,6 +141,28 @@
             <p>Mettez-la à jour avec <code>ZenStyle.progress(element, 80)</code>. Pour une durée inconnue, utilisez <code>zs-progress-indeterminate</code> sans <code>data-zs-progress</code>.</p>
         </section>
 
+        <section aria-labelledby="utilities-documentation">
+            <h2 id="utilities-documentation">Utilitaires CSS</h2>
+            <p>Les valeurs d’espacement vont de <code>0</code> à <code>4</code> et utilisent les variables ZenStyle.</p>
+            <div class="zs-table-responsive" tabindex="0" role="region" aria-label="Liste des utilitaires CSS">
+            <table class="zs-table">
+                <thead><tr><th scope="col">Famille</th><th scope="col">Exemples</th></tr></thead>
+                <tbody>
+                    <tr><th scope="row">Marges et remplissage</th><td><code>zs-m-3</code>, <code>zs-mx-auto</code>, <code>zs-mt-2</code>, <code>zs-px-4</code>, <code>zs-pb-1</code></td></tr>
+                    <tr><th scope="row">Flexbox et grille</th><td><code>zs-flex</code>, <code>zs-flex-col</code>, <code>zs-items-center</code>, <code>zs-justify-between</code>, <code>zs-gap-3</code></td></tr>
+                    <tr><th scope="row">Typographie</th><td><code>zs-text-sm</code>, <code>zs-text-xl</code>, <code>zs-font-bold</code>, <code>zs-text-center</code>, <code>zs-truncate</code></td></tr>
+                    <tr><th scope="row">Dimensions et position</th><td><code>zs-w-full</code>, <code>zs-min-h-screen</code>, <code>zs-sticky</code>, <code>zs-top-0</code>, <code>zs-overflow-auto</code></td></tr>
+                    <tr><th scope="row">Responsive</th><td><code>zs-mobile-hidden</code>, <code>zs-desktop-hidden</code>, <code>zs-md-flex</code>, <code>zs-md-grid-3</code>, <code>zs-md-w-half</code></td></tr>
+                    <tr><th scope="row">Accessibilité</th><td><code>zs-sr-only</code>, <code>zs-sr-only-focusable</code></td></tr>
+                </tbody>
+            </table>
+            </div>
+            <pre><code>&lt;div class="zs-flex zs-flex-col zs-md-flex-row zs-items-center zs-gap-3 zs-p-3"&gt;
+  &lt;strong class="zs-text-lg"&gt;Titre&lt;/strong&gt;
+  &lt;p class="zs-m-0 zs-text-sm"&gt;Contenu responsive&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
         <section aria-labelledby="tooltip-documentation">
             <h2 id="tooltip-documentation">Infobulle</h2>
             <pre><code>&lt;button data-zs-tooltip="Une information utile"&gt;Aide&lt;/button&gt;</code></pre>

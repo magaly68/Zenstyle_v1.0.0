@@ -319,3 +319,48 @@ test('progress bars expose values and support JavaScript updates', async ({ page
   await expect(progress.locator('.zs-progress-bar')).toHaveCSS('width', /.+/);
   await expect(page.getByRole('progressbar', { name: 'Traitement en cours' })).not.toHaveAttribute('aria-valuenow');
 });
+
+test('CSS utilities provide spacing, layout, typography and responsive visibility', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setContent(`
+    <div id="utility" class="zs-flex zs-flex-col zs-items-center zs-justify-between zs-gap-3 zs-px-4 zs-mt-2 zs-w-full zs-text-lg zs-font-bold zs-text-center">
+      <span>Utilitaire</span>
+    </div>
+    <span id="mobile-only" class="zs-desktop-hidden">Mobile</span>
+    <span id="desktop-only" class="zs-mobile-hidden">Desktop</span>
+    <span id="accessible" class="zs-sr-only">Texte accessible</span>
+  `);
+  await page.addStyleTag({ path: path.join(root, 'zenstyle.css') });
+
+  const styles = await page.locator('#utility').evaluate((element) => {
+    const computed = getComputedStyle(element);
+    return {
+      display: computed.display,
+      direction: computed.flexDirection,
+      align: computed.alignItems,
+      width: computed.width,
+      fontSize: computed.fontSize,
+      weight: computed.fontWeight,
+      textAlign: computed.textAlign
+    };
+  });
+  expect(styles.display).toBe('flex');
+  expect(styles.direction).toBe('column');
+  expect(styles.align).toBe('center');
+  expect(styles.fontSize).toBe('18px');
+  expect(styles.weight).toBe('700');
+  expect(styles.textAlign).toBe('center');
+  await expect(page.locator('#mobile-only')).toBeVisible();
+  await expect(page.locator('#desktop-only')).toBeHidden();
+  await expect(page.locator('#accessible')).toBeAttached();
+  const accessibleSize = await page.locator('#accessible').evaluate((element) => ({
+    width: getComputedStyle(element).width,
+    height: getComputedStyle(element).height,
+    overflow: getComputedStyle(element).overflow
+  }));
+  expect(accessibleSize).toEqual({ width: '1px', height: '1px', overflow: 'hidden' });
+
+  await page.setViewportSize({ width: 1024, height: 768 });
+  await expect(page.locator('#mobile-only')).toBeHidden();
+  await expect(page.locator('#desktop-only')).toBeVisible();
+});
