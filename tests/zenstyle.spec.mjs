@@ -323,6 +323,7 @@ test('progress bars expose values and support JavaScript updates', async ({ page
 test('CSS utilities provide spacing, layout, typography and responsive visibility', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.setContent(`
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <div id="utility" class="zs-flex zs-flex-col zs-items-center zs-justify-between zs-gap-3 zs-px-4 zs-mt-2 zs-w-full zs-text-lg zs-font-bold zs-text-center">
       <span>Utilitaire</span>
     </div>
