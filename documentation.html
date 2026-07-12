@@ -47,6 +47,46 @@
 
             <button class="zs-btn zs-btn-primary" data-zs-toast="La documentation fonctionne !" data-zs-toast-type="success">Tester le toast</button>
         </section>
+
+        <section aria-labelledby="dropdown-documentation">
+            <h2 id="dropdown-documentation">Menu déroulant</h2>
+            <pre><code>&lt;div class="zs-dropdown" data-zs-dropdown&gt;
+  &lt;button class="zs-btn zs-btn-primary zs-dropdown-toggle"
+    data-zs-dropdown-toggle&gt;Actions&lt;/button&gt;
+  &lt;div class="zs-dropdown-menu" data-zs-dropdown-menu&gt;
+    &lt;a class="zs-dropdown-item" href="#profil"&gt;Profil&lt;/a&gt;
+    &lt;button class="zs-dropdown-item" type="button"&gt;Partager&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <p>Le menu gère automatiquement les attributs ARIA, le clic extérieur et la touche Échap.</p>
+        </section>
+
+        <section aria-labelledby="mobile-navigation-documentation">
+            <h2 id="mobile-navigation-documentation">Navigation mobile</h2>
+            <p>Le bouton hamburger est généré automatiquement sur les écrans jusqu’à 768 px lorsque <code>zenstyle.js</code> est chargé.</p>
+            <pre><code>&lt;nav class="zs-navbar" aria-label="Navigation principale"&gt;
+  &lt;a class="zs-navbar-brand" href="index.html"&gt;Ma marque&lt;/a&gt;
+  &lt;div class="zs-nav-links"&gt;
+    &lt;a href="index.html" aria-current="page"&gt;Accueil&lt;/a&gt;
+    &lt;a href="contact.html"&gt;Contact&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+            <p>Le composant gère automatiquement le clic extérieur, la touche Échap, le retour du focus et la fermeture après sélection d’un lien.</p>
+        </section>
+
+        <section aria-labelledby="tooltip-documentation">
+            <h2 id="tooltip-documentation">Infobulle</h2>
+            <pre><code>&lt;button data-zs-tooltip="Une information utile"&gt;Aide&lt;/button&gt;</code></pre>
+            <p>L’infobulle apparaît au survol et au clavier lorsque l’élément reçoit le focus.</p>
+        </section>
+
+        <section aria-labelledby="spinner-documentation">
+            <h2 id="spinner-documentation">Indicateur de chargement</h2>
+            <pre><code>&lt;div role="status" aria-label="Chargement en cours"&gt;
+  &lt;span class="zs-spinner" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+            <p>Les tailles <code>zs-spinner-sm</code> et <code>zs-spinner-lg</code> sont également disponibles.</p>
+        </section>
     </main>
 
     <footer class="container">

@@ -61,6 +61,27 @@
     </div>
   </section>
 
+  <section class="zs-p-3" aria-labelledby="interactive-title">
+    <h2 id="interactive-title" class="zs-text-dark">Composants interactifs</h2>
+    <div class="zs-row zs-m-3" style="gap: 2rem; align-items: center; flex-wrap: wrap;">
+      <div class="zs-dropdown" data-zs-dropdown>
+        <button class="zs-btn btn-primary zs-dropdown-toggle" data-zs-dropdown-toggle>Actions</button>
+        <div class="zs-dropdown-menu" data-zs-dropdown-menu>
+          <a class="zs-dropdown-item" href="#profil">Voir le profil</a>
+          <button class="zs-dropdown-item" type="button">Modifier</button>
+          <button class="zs-dropdown-item" type="button">Partager</button>
+        </div>
+      </div>
+
+      <button class="zs-btn btn-secondary" data-zs-tooltip="Une information courte et utile">Survolez-moi</button>
+
+      <div role="status" aria-label="Chargement en cours">
+        <span class="zs-spinner" aria-hidden="true"></span>
+        <span>Chargement…</span>
+      </div>
+    </div>
+  </section>
+
   <footer class="zs-container">
     <p>Mon framework css est un projet open source et est disponible sous la licence MIT. Vous pouvez l'utiliser gratuitement dans vos projets personnels et commerciaux.</p>
         <a href="">Mentions légales</a>

@@ -86,6 +86,10 @@ test('home page exposes working primary navigation', async ({ page }) => {
 
   const navigation = page.getByRole('navigation', { name: 'Navigation principale' });
   await expect(navigation).toBeVisible();
+  const mobileToggle = page.locator('[data-zs-nav-toggle]');
+  if (await mobileToggle.isVisible()) {
+    await mobileToggle.click();
+  }
   await expect(navigation.getByRole('link', { name: 'Accueil', exact: true })).toHaveAttribute('aria-current', 'page');
 
   const expectedLinks = {
@@ -109,6 +113,27 @@ test('home page exposes working primary navigation', async ({ page }) => {
   await expect(page).toHaveURL(/demo\.html$/);
 });
 
+test('mobile navigation opens and closes accessibly', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(fileUrl('index.html'));
+
+  const toggle = page.getByRole('button', { name: 'Ouvrir le menu' });
+  const links = page.locator('.zs-nav-links');
+  await expect(toggle).toBeVisible();
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(links).toBeHidden();
+
+  await toggle.click();
+  await expect(page.getByRole('button', { name: 'Fermer le menu' })).toHaveAttribute('aria-expanded', 'true');
+  await expect(links).toBeVisible();
+  await expect(page.locator('html')).toHaveClass(/zs-nav-lock/);
+
+  await page.keyboard.press('Escape');
+  await expect(links).toBeHidden();
+  await expect(toggle).toBeFocused();
+  await expect(page.locator('html')).not.toHaveClass(/zs-nav-lock/);
+});
+
 test('optional helpers provide theme, copy and download interactions', async ({ page }) => {
   await page.emulateMedia({ colorScheme: 'light' });
   await page.addInitScript(() => {
@@ -119,6 +144,11 @@ test('optional helpers provide theme, copy and download interactions', async ({ 
   });
   await page.goto(fileUrl('index.html'));
 
+  const mobileToggle = page.locator('[data-zs-nav-toggle]');
+  if (await mobileToggle.isVisible()) {
+    await mobileToggle.click();
+  }
+
   const themeToggle = page.getByRole('button', { name: 'Thème sombre' });
   await expect(themeToggle).toHaveAttribute('aria-pressed', 'false');
 
@@ -127,6 +157,10 @@ test('optional helpers provide theme, copy and download interactions', async ({ 
   await expect(page.getByRole('button', { name: 'Thème clair' })).toHaveAttribute('aria-pressed', 'true');
 
   await page.reload();
+  const reloadedMobileToggle = page.locator('[data-zs-nav-toggle]');
+  if (await reloadedMobileToggle.isVisible()) {
+    await reloadedMobileToggle.click();
+  }
   await expect(page.locator('html')).toHaveAttribute('data-zs-theme', 'dark');
 
   await page.getByRole('button', { name: 'Copier le code' }).click();
@@ -192,4 +226,29 @@ test('toast notifications support HTML triggers and the JavaScript API', async (
   await expect(errorToast).toBeVisible();
   await expect(errorToast).toHaveAttribute('role', 'alert');
   await expect(errorToast).toContainText('Échec du traitement.');
+});
+
+test('dropdown, tooltip and spinner components are usable', async ({ page }) => {
+  await page.goto(fileUrl('demo.html'));
+
+  const dropdownToggle = page.getByRole('button', { name: 'Actions' });
+  const dropdownMenu = page.locator('[data-zs-dropdown-menu]');
+  await expect(dropdownToggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(dropdownMenu).toBeHidden();
+
+  await dropdownToggle.click();
+  await expect(dropdownToggle).toHaveAttribute('aria-expanded', 'true');
+  await expect(dropdownMenu).toBeVisible();
+  await expect(page.getByRole('menuitem', { name: 'Voir le profil' })).toBeFocused();
+
+  await page.keyboard.press('Escape');
+  await expect(dropdownMenu).toBeHidden();
+  await expect(dropdownToggle).toBeFocused();
+
+  await expect(page.getByRole('button', { name: 'Survolez-moi' })).toHaveAttribute(
+    'data-zs-tooltip',
+    'Une information courte et utile'
+  );
+  await expect(page.locator('.zs-spinner')).toBeVisible();
+  await expect(page.getByRole('status', { name: 'Chargement en cours' })).toBeVisible();
 });

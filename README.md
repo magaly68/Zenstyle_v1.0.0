@@ -50,6 +50,13 @@ ZenStyle.toast('Enregistrement réussi', { type: 'success', duration: 4000 });
 Types disponibles : `success`, `error`, `warning` et `info`. Une durée de `0`
 conserve la notification jusqu'à sa fermeture manuelle.
 
+Autres composants interactifs :
+
+- navigation mobile automatique pour `.zs-navbar` et `.zs-nav-links` ;
+- menu déroulant avec `data-zs-dropdown`, `data-zs-dropdown-toggle` et `data-zs-dropdown-menu` ;
+- infobulle avec `data-zs-tooltip="Information"` ;
+- indicateur de chargement avec `zs-spinner`, `zs-spinner-sm` ou `zs-spinner-lg`.
+
 ## Convention
 
 Les classes publiques utilisent le prefixe `zs-` pour limiter les collisions avec les styles des projets utilisateurs.
