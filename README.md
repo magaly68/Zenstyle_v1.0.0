@@ -56,6 +56,8 @@ Autres composants interactifs :
 - validation accessible des formulaires avec `data-zs-validate` ;
 - tableaux responsives, pagination et fil d'Ariane ;
 - barres de progression déterminées ou indéterminées ;
+- modales avec piège de focus, accordéons et onglets navigables au clavier ;
+- toasts avec action, minuterie, position et limite d'empilement ;
 - menu déroulant avec `data-zs-dropdown`, `data-zs-dropdown-toggle` et `data-zs-dropdown-menu` ;
 - infobulle avec `data-zs-tooltip="Information"` ;
 - indicateur de chargement avec `zs-spinner`, `zs-spinner-sm` ou `zs-spinner-lg`.

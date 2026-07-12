@@ -195,16 +195,26 @@ test('component examples are interactive', async ({ page }) => {
   await expect(page.locator('.panel').first()).toBeVisible();
   await expect(page.locator('.accordion').first()).toHaveAttribute('aria-expanded', 'true');
 
+  await page.locator('.accordion').first().press('ArrowDown');
+  await expect(page.locator('#accordion-2')).toBeFocused();
+
   await page.locator('.tab-btn', { hasText: 'Onglet 2' }).click();
   await expect(page.locator('#tab2')).toBeVisible();
   await expect(page.locator('#tab1')).toBeHidden();
   await expect(page.locator('.tab-btn', { hasText: 'Onglet 2' })).toHaveAttribute('aria-selected', 'true');
+  await page.locator('.tab-btn', { hasText: 'Onglet 2' }).press('ArrowLeft');
+  await expect(page.locator('.tab-btn', { hasText: 'Onglet 1' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('.tab-btn', { hasText: 'Onglet 1' })).toBeFocused();
 
   await page.locator('button', { hasText: 'Ouvrir la modale' }).click();
   await expect(page.locator('#modal')).toBeVisible();
   await expect(page.locator('#modal')).toHaveAttribute('aria-hidden', 'false');
+  await expect(page.getByRole('button', { name: 'Fermer la modale' })).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('button', { name: 'Fermer la modale' })).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(page.locator('#modal')).toBeHidden();
+  await expect(page.locator('button', { hasText: 'Ouvrir la modale' })).toBeFocused();
 });
 
 test('toast notifications support HTML triggers and the JavaScript API', async ({ page }) => {
@@ -240,6 +250,9 @@ test('dropdown, tooltip and spinner components are usable', async ({ page }) => 
   await expect(dropdownToggle).toHaveAttribute('aria-expanded', 'true');
   await expect(dropdownMenu).toBeVisible();
   await expect(page.getByRole('menuitem', { name: 'Voir le profil' })).toBeFocused();
+
+  await page.keyboard.press('ArrowDown');
+  await expect(page.getByRole('menuitem', { name: 'Modifier' })).toBeFocused();
 
   await page.keyboard.press('Escape');
   await expect(dropdownMenu).toBeHidden();

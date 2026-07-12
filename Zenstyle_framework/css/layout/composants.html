@@ -5,77 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../zenstyle.css">
     <title>Composants</title>
-    <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const setModalOpen = (isOpen) => {
-      const modal = document.getElementById('modal');
-      const openButton = document.getElementById('open-modal');
-      const closeButton = document.getElementById('close-modal');
-
-      modal.classList.toggle('is-open', isOpen);
-      modal.setAttribute('aria-hidden', String(!isOpen));
-      openButton.setAttribute('aria-expanded', String(isOpen));
-
-      if (isOpen) {
-        closeButton.focus();
-      } else {
-        openButton.focus();
-      }
-    };
-
-    document.querySelectorAll('.accordion').forEach((button) => {
-      button.addEventListener('click', () => {
-        const panel = button.nextElementSibling;
-        const isOpen = button.classList.contains('open');
-
-        document.querySelectorAll('.accordion').forEach((item) => {
-          item.classList.remove('open');
-          item.nextElementSibling?.classList.remove('is-open');
-          item.setAttribute('aria-expanded', 'false');
-          item.nextElementSibling?.setAttribute('hidden', '');
-        });
-
-        if (!isOpen && panel) {
-          button.classList.add('open');
-          panel.classList.add('is-open');
-          button.setAttribute('aria-expanded', 'true');
-          panel.removeAttribute('hidden');
-        }
-      });
-    });
-
-    document.querySelectorAll('.tabs').forEach((tabs) => {
-      tabs.querySelectorAll('.tab-btn').forEach((button) => {
-        button.addEventListener('click', () => {
-          const target = button.dataset.tab;
-
-          tabs.querySelectorAll('.tab-btn').forEach((item) => {
-            item.classList.remove('active');
-            item.setAttribute('aria-selected', 'false');
-          });
-          tabs.parentElement.querySelectorAll('.tab-content').forEach((content) => content.classList.remove('active'));
-
-          button.classList.add('active');
-          button.setAttribute('aria-selected', 'true');
-          tabs.parentElement.querySelector(`#${target}`)?.classList.add('active');
-        });
-      });
-    });
-
-    document.getElementById('open-modal').addEventListener('click', () => setModalOpen(true));
-    document.getElementById('close-modal').addEventListener('click', () => setModalOpen(false));
-    document.getElementById('modal').addEventListener('click', (event) => {
-      if (event.target.id === 'modal') {
-        setModalOpen(false);
-      }
-    });
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && document.getElementById('modal').classList.contains('is-open')) {
-        setModalOpen(false);
-      }
-    });
-  });
-</script>
 </head>
 <body>
     <header class="zs-site-header">
@@ -127,11 +56,11 @@
           <!--Modales-->
           <section id="modals">
             <h2>Modales</h2>
-            <button class="btn btn-primary" id="open-modal" aria-controls="modal" aria-expanded="false">Ouvrir la modale</button>
+            <button class="btn btn-primary" id="open-modal" data-zs-modal-open="#modal" aria-controls="modal">Ouvrir la modale</button>
 
             <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
               <div class="modal-content">
-                <button class="close" id="close-modal" type="button" aria-label="Fermer la modale">&times;</button>
+                <button class="close" id="close-modal" data-zs-modal-close type="button" aria-label="Fermer la modale">&times;</button>
                 <h3 id="modal-title">Modale</h3>
                 <p>Voici une modale fonctionnelle.</p>
               </div>
@@ -140,7 +69,7 @@
 
           <!--Accordéons-->
 
-          <section id="accordions">
+          <section id="accordions" data-zs-accordion="single">
             <h2>Accordéons</h2>
             <button class="accordion" id="accordion-1" aria-controls="panel-1" aria-expanded="false">Section 1</button>
             <div class="panel" id="panel-1" role="region" aria-labelledby="accordion-1" hidden>
@@ -182,6 +111,7 @@
             <a href="">Gestion des cookies</a>
         <p>&copy; 2023 Mon framework css. Tous droits réservés.</p>
     </footer>  
+    <script src="../../../zenstyle.js" defer></script>
 </body>
 </html>
 

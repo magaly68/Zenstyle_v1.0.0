@@ -46,6 +46,7 @@
             <p>La durée est exprimée en millisecondes. Utilisez <code>duration: 0</code> pour garder le toast affiché jusqu’à sa fermeture manuelle.</p>
 
             <button class="zs-btn zs-btn-primary" data-zs-toast="La documentation fonctionne !" data-zs-toast-type="success">Tester le toast</button>
+            <p>L’API accepte aussi <code>position</code> (<code>top-right</code>, <code>top-left</code>, <code>bottom-right</code>, <code>bottom-left</code>), <code>max</code>, <code>actionLabel</code> et <code>onAction</code>. Une minuterie visuelle accompagne les notifications temporaires.</p>
         </section>
 
         <section aria-labelledby="dropdown-documentation">
@@ -59,6 +60,14 @@
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
             <p>Le menu gère automatiquement les attributs ARIA, le clic extérieur et la touche Échap.</p>
+            <p>Les touches fléchées, Début et Fin permettent de parcourir les actions. Ajoutez <code>zs-dropdown-end</code> pour aligner le menu à droite.</p>
+        </section>
+
+        <section aria-labelledby="advanced-components-documentation">
+            <h2 id="advanced-components-documentation">Modales, accordéons et onglets</h2>
+            <p>Ouvrez une modale avec <code>data-zs-modal-open="#identifiant"</code> et fermez-la avec <code>data-zs-modal-close</code>. Le focus reste dans la fenêtre puis revient au déclencheur.</p>
+            <p>Placez les boutons <code>zs-accordion</code> dans un conteneur <code>data-zs-accordion="single"</code> ou <code>data-zs-accordion="multiple"</code>. Les flèches, Début et Fin déplacent le focus.</p>
+            <p>Les listes ayant <code>role="tablist"</code> prennent en charge les flèches gauche/droite, Début et Fin et synchronisent automatiquement leurs panneaux.</p>
         </section>
 
         <section aria-labelledby="mobile-navigation-documentation">

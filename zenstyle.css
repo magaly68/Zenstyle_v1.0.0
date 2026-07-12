@@ -1133,6 +1133,8 @@ select:focus {
   display: flex;
 }
 
+.zs-modal-lock { overflow: hidden; }
+
 .zs-modal-content,
 .modal-content {
   width: min(100%, 32rem);
@@ -1164,6 +1166,17 @@ select:focus {
   text-align: left;
   cursor: pointer;
 }
+
+.zs-accordion::after,
+.accordion::after {
+  content: '+';
+  float: right;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.zs-accordion[aria-expanded='true']::after,
+.accordion[aria-expanded='true']::after { content: '−'; }
 
 .zs-panel,
 .panel {
@@ -1331,6 +1344,10 @@ select:focus {
   display: none;
 }
 
+.zs-dropdown-end .zs-dropdown-menu { right: 0; left: auto; }
+.zs-dropdown-divider { height: 1px; margin: var(--zs-space-1); background: var(--zs-border); }
+.zs-dropdown-header { padding: var(--zs-space-2) var(--zs-space-3); color: var(--zs-text-muted); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
+
 .zs-dropdown-item {
   display: block;
   width: 100%;
@@ -1437,6 +1454,8 @@ select:focus {
   box-shadow: var(--zs-shadow-lg);
   pointer-events: auto;
   animation: zs-toast-enter 220ms ease-out both;
+  overflow: hidden;
+  position: relative;
 }
 
 .zs-toast-success { background: var(--zs-color-success); }
@@ -1472,6 +1491,33 @@ select:focus {
   outline: 2px solid currentColor;
   outline-offset: 1px;
 }
+
+.zs-toast-action {
+  padding: 0.35rem 0.55rem;
+  color: inherit;
+  border: 1px solid currentColor;
+  border-radius: var(--zs-radius-sm);
+  background: transparent;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.zs-toast-timer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.7);
+  transform-origin: left;
+  animation: zs-toast-timer linear forwards;
+}
+
+[data-zs-toast-position='top-left'] { right: auto; left: var(--zs-space-3); }
+[data-zs-toast-position='bottom-right'] { top: auto; bottom: var(--zs-space-3); }
+[data-zs-toast-position='bottom-left'] { top: auto; right: auto; bottom: var(--zs-space-3); left: var(--zs-space-3); }
+
+@keyframes zs-toast-timer { to { transform: scaleX(0); } }
 
 .zs-toast.is-leaving {
   animation: zs-toast-leave 180ms ease-in both;

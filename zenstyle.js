@@ -475,6 +475,141 @@
     renderPlayground();
   }
 
+  const modalTriggers = document.querySelectorAll('[data-zs-modal-open]');
+  let activeModal = null;
+  let modalReturnFocus = null;
+
+  function getFocusableElements(container) {
+    return [...container.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')]
+      .filter((element) => !element.hidden);
+  }
+
+  function closeModal(modal) {
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    root.classList.remove('zs-modal-lock');
+    activeModal = null;
+    modalReturnFocus?.focus();
+    modalReturnFocus = null;
+    modal.dispatchEvent(new CustomEvent('zs:modal-close'));
+  }
+
+  function openModal(modal, trigger) {
+    if (!modal) return;
+    if (activeModal) closeModal(activeModal);
+    activeModal = modal;
+    modalReturnFocus = trigger || document.activeElement;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('role', 'dialog');
+    root.classList.add('zs-modal-lock');
+    getFocusableElements(modal)[0]?.focus();
+    modal.dispatchEvent(new CustomEvent('zs:modal-open'));
+  }
+
+  modalTriggers.forEach((trigger) => {
+    const modal = document.querySelector(trigger.dataset.zsModalOpen);
+    trigger.setAttribute('aria-haspopup', 'dialog');
+    trigger.addEventListener('click', () => openModal(modal, trigger));
+  });
+
+  document.querySelectorAll('.zs-modal, .modal').forEach((modal) => {
+    modal.setAttribute('aria-hidden', modal.classList.contains('is-open') ? 'false' : 'true');
+    modal.querySelectorAll('[data-zs-modal-close], .zs-modal-close, .close').forEach((button) => {
+      button.addEventListener('click', () => closeModal(modal));
+    });
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal && !modal.hasAttribute('data-zs-modal-static')) closeModal(modal);
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (!activeModal) return;
+    if (event.key === 'Escape') {
+      closeModal(activeModal);
+      return;
+    }
+    if (event.key === 'Tab') {
+      const focusable = getFocusableElements(activeModal);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+  document.querySelectorAll('[data-zs-accordion]').forEach((accordion) => {
+    const buttons = [...accordion.querySelectorAll('.zs-accordion, .accordion')];
+    const single = accordion.dataset.zsAccordion !== 'multiple';
+
+    function setAccordionItem(button, open) {
+      const panel = document.getElementById(button.getAttribute('aria-controls')) || button.nextElementSibling;
+      button.classList.toggle('open', open);
+      button.setAttribute('aria-expanded', String(open));
+      panel?.classList.toggle('is-open', open);
+      panel?.toggleAttribute('hidden', !open);
+    }
+
+    buttons.forEach((button, index) => {
+      const panel = document.getElementById(button.getAttribute('aria-controls')) || button.nextElementSibling;
+      if (!button.id) button.id = `zs-accordion-${index + 1}`;
+      if (panel && !panel.id) panel.id = `zs-panel-${index + 1}`;
+      if (panel) {
+        button.setAttribute('aria-controls', panel.id);
+        panel.setAttribute('role', 'region');
+        panel.setAttribute('aria-labelledby', button.id);
+      }
+      setAccordionItem(button, button.getAttribute('aria-expanded') === 'true');
+      button.addEventListener('click', () => {
+        const open = button.getAttribute('aria-expanded') !== 'true';
+        if (single && open) buttons.forEach((item) => setAccordionItem(item, false));
+        setAccordionItem(button, open);
+      });
+      button.addEventListener('keydown', (event) => {
+        if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        const targetIndex = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (index + (event.key === 'ArrowDown' ? 1 : -1) + buttons.length) % buttons.length;
+        buttons[targetIndex].focus();
+      });
+    });
+  });
+
+  document.querySelectorAll('[role="tablist"]').forEach((tablist) => {
+    const tabs = [...tablist.querySelectorAll('[role="tab"]')];
+
+    function activateTab(tab, focus = false) {
+      tabs.forEach((item) => {
+        const selected = item === tab;
+        const panel = document.getElementById(item.getAttribute('aria-controls'));
+        item.classList.toggle('active', selected);
+        item.setAttribute('aria-selected', String(selected));
+        item.tabIndex = selected ? 0 : -1;
+        panel?.classList.toggle('active', selected);
+        panel?.toggleAttribute('hidden', !selected);
+      });
+      if (focus) tab.focus();
+    }
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => activateTab(tab));
+      tab.addEventListener('keydown', (event) => {
+        if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        const targetIndex = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+        activateTab(tabs[targetIndex], true);
+      });
+    });
+    activateTab(tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') || tabs[0]);
+  });
+
   const dropdowns = document.querySelectorAll('[data-zs-dropdown]');
 
   function closeDropdown(dropdown, restoreFocus = false) {
@@ -533,6 +668,21 @@
     dropdown.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') {
         closeDropdown(dropdown, true);
+        return;
+      }
+
+      const items = [...menu.querySelectorAll('[role="menuitem"]')];
+      const currentIndex = items.indexOf(document.activeElement);
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        const direction = event.key === 'ArrowDown' ? 1 : -1;
+        items[(currentIndex + direction + items.length) % items.length]?.focus();
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        items[0]?.focus();
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        items[items.length - 1]?.focus();
       }
     });
   });
@@ -588,6 +738,8 @@
     const toast = document.createElement('div');
     const content = document.createElement('span');
     const closeButton = document.createElement('button');
+    const container = getToastContainer();
+    const maxToasts = Math.max(1, Number(options.max) || 4);
 
     toast.className = `zs-toast zs-toast-${type}`;
     toast.setAttribute('role', type === 'error' ? 'alert' : 'status');
@@ -599,8 +751,28 @@
     closeButton.setAttribute('aria-label', 'Fermer la notification');
     closeButton.textContent = '\u00d7';
     closeButton.addEventListener('click', () => removeToast(toast));
-    toast.append(content, closeButton);
-    getToastContainer().appendChild(toast);
+    toast.append(content);
+    if (options.actionLabel) {
+      const action = document.createElement('button');
+      action.className = 'zs-toast-action';
+      action.type = 'button';
+      action.textContent = options.actionLabel;
+      action.addEventListener('click', () => {
+        options.onAction?.();
+        removeToast(toast);
+      });
+      toast.appendChild(action);
+    }
+    toast.appendChild(closeButton);
+    if (duration > 0) {
+      const timer = document.createElement('span');
+      timer.className = 'zs-toast-timer';
+      timer.style.animationDuration = `${duration}ms`;
+      toast.appendChild(timer);
+    }
+    container.dataset.zsToastPosition = options.position || 'top-right';
+    while (container.children.length >= maxToasts) container.firstElementChild?.remove();
+    container.appendChild(toast);
 
     if (duration > 0) {
       toast.zsTimeout = window.setTimeout(() => removeToast(toast), duration);
