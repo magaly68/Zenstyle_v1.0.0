@@ -1,19 +1,23 @@
 {
   "name": "zenstyle",
-  "version": "0.1.0",
-  "description": "Framework CSS leger et reutilisable pour projets HTML.",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Framework CSS léger, responsive, personnalisable et accessible.",
   "type": "module",
-  "main": "zenstyle.css",
+  "main": "zenstyle.js",
+  "style": "zenstyle.css",
   "files": [
     "zenstyle.css",
     "zenstyle.js",
+    "dist",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "start": "node scripts/server.mjs",
+    "build": "node scripts/build.mjs",
     "check": "node scripts/check-framework.mjs",
+    "prepack": "npm run build && npm run check",
     "test": "playwright test",
     "test:headed": "playwright test --headed",
     "test:install": "playwright install"
@@ -22,10 +26,16 @@
     "css",
     "framework",
     "zenstyle",
-    "html"
+    "html",
+    "responsive",
+    "accessible",
+    "design-system"
   ],
   "license": "MIT",
   "devDependencies": {
-    "@playwright/test": "^1.60.0"
+    "@axe-core/playwright": "^4.12.1",
+    "@playwright/test": "^1.60.0",
+    "esbuild": "^0.28.1",
+    "lightningcss": "^1.32.0"
   }
 }

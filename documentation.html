@@ -26,6 +26,11 @@
 
     <main class="zs-container zs-p-3">
         <h1>Documentation ZenStyle</h1>
+        <div class="zs-doc-search">
+            <label for="documentation-search">Rechercher dans la documentation</label>
+            <input class="zs-input" id="documentation-search" type="search" placeholder="Ex. modale, tableau, formulaire…" data-zs-doc-search>
+            <p class="zs-doc-search-status" data-zs-doc-search-status role="status" aria-live="polite"></p>
+        </div>
         <section aria-labelledby="toast-documentation">
             <h2 id="toast-documentation">Notifications toast</h2>
             <p>Un toast confirme une action sans bloquer la navigation. Les types disponibles sont <code>success</code>, <code>error</code>, <code>warning</code> et <code>info</code>.</p>

@@ -1,6 +1,7 @@
 ﻿import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { expect, test } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
 
 const root = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 
@@ -43,6 +44,15 @@ test.describe('ZenStyle public pages', () => {
     });
   }
 });
+
+for (const pageName of ['index.html', 'documentation.html', 'themes.html', 'contact.html']) {
+  test(`${pageName} has no serious accessibility violations`, async ({ page }) => {
+    await page.goto(fileUrl(pageName));
+    const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
+    const seriousViolations = results.violations.filter((violation) => ['serious', 'critical'].includes(violation.impact));
+    expect(seriousViolations).toEqual([]);
+  });
+}
 
 test('core CSS classes expose usable styles', async ({ page }) => {
   await page.setContent(`
@@ -165,7 +175,7 @@ test('optional helpers provide theme, copy and download interactions', async ({ 
 
   await page.getByRole('button', { name: 'Copier le code' }).click();
   await expect(page.locator('[data-zs-copy-status]')).toHaveText('Code copié dans le presse-papiers.');
-  await expect(page.locator('a[download]')).toHaveAttribute('href', 'zenstyle.css');
+  await expect(page.locator('a[download]')).toHaveAttribute('href', 'dist/zenstyle.min.css');
 });
 
 test('playground updates the live component and generated markup', async ({ page }) => {
@@ -364,4 +374,39 @@ test('CSS utilities provide spacing, layout, typography and responsive visibilit
   await page.setViewportSize({ width: 1024, height: 768 });
   await expect(page.locator('#mobile-only')).toBeHidden();
   await expect(page.locator('#desktop-only')).toBeVisible();
+});
+
+test('theme builder applies presets and generates reusable CSS', async ({ page }) => {
+  await page.goto(fileUrl('themes.html'));
+
+  const primaryColor = page.getByLabel('Couleur principale');
+  await expect(primaryColor).toHaveValue('#2563eb');
+  await page.getByRole('button', { name: 'Doux' }).click();
+  await expect(primaryColor).toHaveValue('#8b5cf6');
+  await expect(page.locator('html')).toHaveCSS('--zs-color-primary', '#8b5cf6');
+  await expect(page.locator('[data-zs-theme-output]')).toContainText('--zs-color-primary: #8b5cf6');
+
+  await page.getByRole('button', { name: 'Réinitialiser' }).click();
+  await expect(primaryColor).toHaveValue('#2563eb');
+
+  const smallButton = page.getByRole('button', { name: 'Petit' });
+  const largeButton = page.getByRole('button', { name: 'Grand' });
+  const sizes = await Promise.all([
+    smallButton.evaluate((element) => element.getBoundingClientRect().height),
+    largeButton.evaluate((element) => element.getBoundingClientRect().height)
+  ]);
+  expect(sizes[1]).toBeGreaterThan(sizes[0]);
+});
+
+test('documentation search filters sections and announces results', async ({ page }) => {
+  await page.goto(fileUrl('documentation.html'));
+
+  const search = page.getByLabel('Rechercher dans la documentation');
+  await search.fill('validation de formulaire');
+  await expect(page.locator('[data-zs-doc-search-status]')).toContainText('1 section trouvée');
+  await expect(page.getByRole('heading', { name: 'Validation de formulaire' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Notifications toast' })).toBeHidden();
+
+  await search.fill('');
+  await expect(page.getByRole('heading', { name: 'Notifications toast' })).toBeVisible();
 });

@@ -342,7 +342,7 @@
 
   const documentationSearch = document.querySelector('[data-zs-doc-search]');
   if (documentationSearch) {
-    const sections = [...document.querySelectorAll('[data-zs-doc-section]')];
+    const sections = [...document.querySelectorAll('[data-zs-doc-section], main > section')];
     const status = document.querySelector('[data-zs-doc-search-status]');
     documentationSearch.addEventListener('input', () => {
       const query = documentationSearch.value.trim().toLocaleLowerCase('fr');

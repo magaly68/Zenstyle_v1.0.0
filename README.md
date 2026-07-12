@@ -1,5 +1,7 @@
 ﻿# ZenStyle
 
+Version stable : **1.0.0**.
+
 ZenStyle est un framework CSS leger et reutilisable, expose en un seul fichier public : `zenstyle.css`.
 
 ## Utilisation
@@ -96,13 +98,16 @@ Controles locaux :
 npm.cmd start
 npm.cmd run check
 npm.cmd test
+npm.cmd run build
 ```
 
 `npm.cmd start` lance un serveur local sur
 [`http://127.0.0.1:4173/`](http://127.0.0.1:4173/). Le port peut être changé
 avec `PORT=4174 npm.cmd start`.
 
-`npm.cmd run check` verifie que le framework garde un seul fichier CSS public et que les pages HTML ne pointent pas vers d'anciens chemins CSS.
+`npm.cmd run build` génère `dist/zenstyle.min.css` et `dist/zenstyle.min.js` pour la production.
+
+`npm.cmd run check` vérifie que le framework garde un seul fichier CSS source et que les pages HTML ne pointent pas vers d'anciens chemins CSS.
 
 `npm.cmd test` ouvre les pages avec Playwright, controle le chargement de `zenstyle.css`, les images cassees, le debordement horizontal et les composants interactifs.
 
