@@ -2,29 +2,31 @@
 
 Version stable : **1.0.0**.
 
-ZenStyle est un framework CSS leger et reutilisable, expose en un seul fichier public : `zenstyle.css`.
+ZenStyle est un framework CSS léger et réutilisable, exposé en un seul fichier public : `zenstyle.css`.
 
 ## Utilisation
 
 Copie `zenstyle.css` dans ton projet, puis charge-le dans tes pages HTML :
 
-```html
+```HTML
 <link rel="stylesheet" href="zenstyle.css">
 ```
 
 Les fonctionnalités optionnelles utilisent le fichier `zenstyle.js` :
 
-```html
+```HTML
 <script src="zenstyle.js" defer></script>
 ```
 
 Ajoutez `data-zs-theme-toggle` à un bouton pour activer le thème clair/sombre,
+
 `data-zs-copy="#mon-code"` à un bouton pour copier le contenu d'un bloc de code,
+
 ou `data-zs-toast="Message"` pour afficher une notification temporaire.
 
 Exemple :
 
-```html
+```HTML
 <main class="zs-container">
   <button class="zs-btn zs-btn-primary">Action</button>
 
@@ -37,7 +39,8 @@ Exemple :
 
 Toast avec attributs HTML :
 
-```html
+```HTML
+
 <button data-zs-toast="Enregistrement réussi" data-zs-toast-type="success">
   Enregistrer
 </button>
@@ -45,7 +48,7 @@ Toast avec attributs HTML :
 
 Toast avec l'API JavaScript :
 
-```js
+```JS
 ZenStyle.toast('Enregistrement réussi', { type: 'success', duration: 4000 });
 ```
 
@@ -67,7 +70,7 @@ Autres composants interactifs :
 
 ## Convention
 
-Les classes publiques utilisent le prefixe `zs-` pour limiter les collisions avec les styles des projets utilisateurs.
+Les classes publiques utilisent le préfixe `zs-` pour limiter les collisions avec les styles des projets utilisateurs.
 
 Classes principales :
 
@@ -78,21 +81,23 @@ Classes principales :
 - `zs-input`, `zs-textarea`, `zs-select`, `zs-form-group`
 - `zs-alert`, `zs-badge`, `zs-modal`, `zs-accordion`, `zs-tabs`
 
-Fonctionnalités JavaScript optionnelles : thème clair/sombre mémorisé, copie de
-code avec solution de repli, playground interactif et respect de la préférence système.
+Fonctionnalités JavaScript optionnelles :
+- thème clair/sombre mémorisé,
+- copie de code avec solution de repli,
+- playground interactif et respect de la préférence système.
 
-## Developpement et controles
+## Développement et contrôles
 
-Sous PowerShell, si `npm` est bloque par la politique d'execution, utilise `npm.cmd`.
+Sous PowerShell, si `npm` est bloqué par la politique d'exécution, utilise `npm.cmd`.
 
-Premiere installation :
+Première installation :
 
 ```powershell
 npm.cmd install
 npx.cmd playwright install chromium
 ```
 
-Controles locaux :
+Contrôles locaux :
 
 ```powershell
 npm.cmd start
@@ -109,16 +114,16 @@ avec `PORT=4174 npm.cmd start`.
 
 `npm.cmd run check` vérifie que le framework garde un seul fichier CSS source et que les pages HTML ne pointent pas vers d'anciens chemins CSS.
 
-`npm.cmd test` ouvre les pages avec Playwright, controle le chargement de `zenstyle.css`, les images cassees, le debordement horizontal et les composants interactifs.
+`npm.cmd test` ouvre les pages avec Playwright, contrôle le chargement de `zenstyle.css`, les images cassées, le débordement horizontal et les composants interactifs.
 
 ## Structure
 
 - `zenstyle.css` : fichier public du framework.
 - `README.md` : documentation d'installation et d'usage.
 - `tests/` : tests Playwright.
-- `scripts/check-framework.mjs` : controles statiques sans dependance navigateur.
+- `scripts/check-framework.mjs` : contrôles statiques sans dépendance navigateur.
 
-Les pages publiques utilisent des noms ASCII (`icones.html`, `themes.html`) pour eviter les problemes d'encodage dans les outils, les URLs et les systemes de fichiers.
+Les pages publiques utilisent des noms ASCII (`icones.html`, `themes.html`) pour éviter les problèmes d'encodage dans les outils, les URLs et les systemes de fichiers.
 
 ## Publication
 
